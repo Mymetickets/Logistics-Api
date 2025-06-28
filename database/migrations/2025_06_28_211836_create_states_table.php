@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('status',['active', 'inactive']);
+            $table->foreignId('country_id')->constrained('countries', 'id')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('status')->default('false');
             $table->timestamps();
         });
     }

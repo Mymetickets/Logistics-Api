@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
 
-class country extends Model
+class Country extends Model
 {
     //
       use HasFactory, Notifiable;
      protected $fillable=[
-
-     ];
+        'name',
+        'status'
+         ];
 
 }

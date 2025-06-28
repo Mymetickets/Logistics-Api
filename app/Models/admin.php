@@ -7,13 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
-class admin extends Model
+class Admin extends Model
 {
     //
      use HasFactory, Notifiable;
-     protected $fillable=[
+     protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
-     ];
+    protected $hidden=[
+        'password'
+    ];
 
 
 }
