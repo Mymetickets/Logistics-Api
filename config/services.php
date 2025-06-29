@@ -34,5 +34,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'utils' => [
+        'paginate_per_page' => env('PAGINATE_PER_PAGE')
+    ]
 
 ];

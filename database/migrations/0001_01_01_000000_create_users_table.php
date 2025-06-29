@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserEnums;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('password')->bcrypt();
             $table->timestamp('last_login');
-           $table->enum('status', ['active', 'unverified', 'suspended'])->default('unverified');
+           $table->enum('status', [UserEnums::ACTIVE, UserEnums::UNVERIFIED, UserEnums::SUSPENDED])->default(UserEnums::UNVERIFIED);
             $table->rememberToken();
             $table->timestamps();
         });

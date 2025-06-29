@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserEnums;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password')->brcypt();
-            $table->enum('status',['active','inactive','suspended']);
+            $table->enum('status',[UserEnums::ACTIVE, UserEnums::INACTIVE , UserEnums::SUSPENDED]);
             $table->timestamps();
         });
     }

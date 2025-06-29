@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Transportations;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
-
-class State extends Model
+class TransportationModeCategory extends Model
 {
     //
-      use HasFactory, Notifiable;
-     protected $fillable=[
+    use HasFactory, Notifiable;
+    protected $fillable=[
         'name',
-        'country_id',
+        'slug',
+        'description',
         'status'
-     ];
-
+    ];
 }
