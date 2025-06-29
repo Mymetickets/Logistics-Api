@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('country_id')->constrained('countries', 'id')->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('status')->default('false');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
