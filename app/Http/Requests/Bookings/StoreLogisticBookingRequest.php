@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Bookings;
 use App\Enums\LogisticBookingEnums;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LogisticBookingRequest extends FormRequest
+class StoreLogisticBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
