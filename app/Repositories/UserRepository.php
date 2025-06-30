@@ -2,10 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Enums\UserEnums;
 use App\Models\User;
+use App\Traits\HasAuthToken;
 
 class UserRepository implements IRepository
 {
+    use HasAuthToken;
     /**
      * Create a new class instance.
      */
@@ -45,4 +48,15 @@ class UserRepository implements IRepository
             ->get();
         return $rec;
     }
+
+    public function getActiveUsers(){
+        $records = User::active()->paginate(pageCount());
+        return $records;
+    }
+
+    public function findByEmail($email){
+        $data = User::where("email", $email)->first();
+        return $data;
+    }
+
 }

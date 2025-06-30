@@ -25,7 +25,7 @@ class ApiResponse
 
     public static function failed($message, $data = [], $errors = [], $httpCode = 422){
         return response()->json([
-            "status" => StatusCodeEnums::SUCCESS,
+            "status" => StatusCodeEnums::FAILED,
             "message" => $message,
             "data" => $data,
             "errors" => $errors
