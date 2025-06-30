@@ -36,11 +36,11 @@ class LogisticBookingServices
         return $this->logisticBookingRepository->all();
     }
 
-
     public function searchBookings($param)
     {
         return $this->logisticBookingRepository->search($param);
     }
+
     public function getBookingsByUserId($userId)
     {
         return $this->logisticBookingRepository->findByUserId($userId);
