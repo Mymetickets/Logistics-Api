@@ -14,6 +14,17 @@ class LogisticBookingResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        //return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'good_name' => $this->good_name,
+            'receiver_name' => $this->receiver_name,
+            'receiver_phone' => $this->receiver_phone,
+            'receiver_address' => $this->receiver_address,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }
