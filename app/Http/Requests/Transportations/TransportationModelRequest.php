@@ -22,9 +22,9 @@ class TransportationModelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'category_id' => 'required|string|exists:transportation_mode_categories,id',
-            'description' => 'nullable|string'
+            'name' => ['required','string'],
+            'category_id' => ['required','string','exists:transportation_mode_categories,id'],
+            'description' => ['nullable','string']
         ];
     }
 }

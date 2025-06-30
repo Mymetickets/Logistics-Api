@@ -4,7 +4,7 @@ namespace App\Traits;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 trait HasAuthToken{
-    public function createAccessToken( Authenticatable $model, $name, $abilities = []){
+    public function  createAccessToken( Authenticatable $model, $name, $abilities = []){
         $token = $model->createToken($name, $abilities)->plainTextToken;
         return $token;
     }

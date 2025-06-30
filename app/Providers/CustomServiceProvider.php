@@ -5,6 +5,11 @@ namespace App\Providers;
 use App\Repositories\UserRepository;
 use App\Services\AuthService;
 use App\Services\UserService;
+use App\Services\Transportation\TransportationModeCategoryService;
+use App\Repositories\Transportations\TransportationCategoryRepository;
+
+use App\Services\Transportation\TransportationModelService;
+use App\Repositories\Transportations\TransportationModelRepository;
 use Illuminate\Support\ServiceProvider;
 
 class CustomServiceProvider extends ServiceProvider
@@ -15,9 +20,20 @@ class CustomServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
-        $this->app->bind(AuthService::class, function(){
+        $this->app->bind(AuthService::class, function () {
             return new AuthService(new UserRepository);
         });
+        $this->app->bind(TransportationModeCategoryService::class, function () {
+            return new TransportationModeCategoryService(new TransportationCategoryRepository);
+        });
+        // $this->app->bind(TransportationModelService::class, function () {
+        //     return new TransportationModelService(
+        //         new TransportationModelRepository,
+        //         new TransportationCategoryRepository
+        //     );
+        // });
+        $this->app->bind(TransportationModelService::class);
+
     }
 
     /**

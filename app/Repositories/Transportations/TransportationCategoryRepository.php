@@ -18,6 +18,7 @@ class  TransportationCategoryRepository implements IRepository
         return $data;
     }
 
+
     public function findById($id){
         $data = TransportationModeCategory::find($id);
         return $data;
@@ -44,6 +45,10 @@ class  TransportationCategoryRepository implements IRepository
             ->orWhere("description", "=", $param)
              ->orWhere("status", "LIKE", "%$param%")
             ->get();
+        return $rec;
+    }
+    public function findData($column, $data){
+        $rec = TransportationModeCategory::query()->where($column,$data);
         return $rec;
     }
 }

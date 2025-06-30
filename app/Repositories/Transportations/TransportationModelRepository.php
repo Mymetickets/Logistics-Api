@@ -46,4 +46,8 @@ class  TransportationModelRepository implements IRepository
             ->get();
         return $rec;
     }
+    public function findData($column, $data){
+        $rec = TransportationModel::query()->where($column,$data);
+        return $rec;
+    }
 }
