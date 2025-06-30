@@ -37,9 +37,9 @@ class LogisticBookingServices
     }
 
 
-    public function getBookingsByStatus($status)
+    public function searchBookings($param)
     {
-        return $this->logisticBookingRepository->findByStatus($status);
+        return $this->logisticBookingRepository->search($param);
     }
     public function getBookingsByUserId($userId)
     {
