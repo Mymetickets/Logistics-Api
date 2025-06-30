@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Repositories\LogisticBookingRepository;
+use App\Enums\LogisticBookingEnums;
 
 class LogisticBookingServices
 {
@@ -19,6 +20,17 @@ class LogisticBookingServices
 
     public function updateBooking($id, array $data)
     {
+        $booking = $this->logisticBookingRepository->findById($id);
+
+    if (!$booking) {
+        abort(401, "Booking not found");;
+    }
+
+    if ($booking->status !== LogisticBookingEnums::DRAFT) {
+        abort(401, 'Only bookings in draft status can be updated.');
+    }
+
+
         return $this->logisticBookingRepository->update($id, $data);
     }
 

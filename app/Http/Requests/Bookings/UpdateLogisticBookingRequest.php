@@ -31,8 +31,8 @@ class UpdateLogisticBookingRequest extends FormRequest
             'receiver_email'    => 'sometimes|required|email|max:255',
             'receiver_phone'    => 'sometimes|required|string|max:20',
             'receiver_address'  => 'sometimes|required|string|max:500',
-            //NOT SURE IF I SHOULD INCLUDE THE STATUS FIELD HERE
-            //USED SOMETIMES IN THE VALIDATION RULES BECAUSE  THE FIELDS MAY NOT COME WITH THE REQUEST
+            'status' => 'sometimes|required|in:' . LogisticBookingEnums::CANCEL,
+            
         ];
     }
 }
