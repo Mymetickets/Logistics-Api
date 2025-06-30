@@ -15,7 +15,11 @@ class LogisticBookingServices
 
     public function createBooking(array $data)
     {
-        return $this->logisticBookingRepository->create($data);
+        $data= $this->logisticBookingRepository->create($data);
+        if (!$data) {
+            abort(401, "Booking creation failed");
+        }
+        return $data;
     }
 
     public function updateBooking($id, array $data)
@@ -30,19 +34,39 @@ class LogisticBookingServices
         abort(401, 'Only bookings in draft status can be updated.');
     }
 
+        $data= $this->logisticBookingRepository->update($id, $data);
 
-        return $this->logisticBookingRepository->update($id, $data);
+    if (!$data) {
+        abort(401, "Booking update failed");
+    }
+        return $data;
     }
 
     public function getBookingById($id)
     {
-        return $this->logisticBookingRepository->findById($id);
+        $data= $this->logisticBookingRepository->findById($id);
+        if (!$data) {
+            abort(401, "Booking not found");
+        }
+        return $data;
     }
 
     public function deleteBooking($id)
     {
-        return $this->logisticBookingRepository->delete($id);
+        //checking if ID is valid
+    $booking = $this->logisticBookingRepository->findById($id);
+
+        if (!$booking) {
+            abort(401, "booking not found");
+        }
+
+        $data= $this->logisticBookingRepository->delete($id);
+        if (!$data) {
+            abort(401, "Booking deletion failed");
+        }
+        return $data;
     }
+
     public function getAllBookings()
     {
         return $this->logisticBookingRepository->all();
@@ -50,12 +74,20 @@ class LogisticBookingServices
 
     public function searchBookings($param)
     {
-        return $this->logisticBookingRepository->search($param);
+        $data= $this->logisticBookingRepository->search($param);
+        if (!$data) {
+            abort(401, "Bookings not found");
+        }
+        return $data;
     }
 
     public function getBookingsByUserId($userId)
     {
-        return $this->logisticBookingRepository->findByUserId($userId);
+        $data= $this->logisticBookingRepository->findByUserId($userId);
+        if (!$data) {
+            abort(401, "Bookings not found for this user");
+        }
+        return $data;
     }
 
 }
