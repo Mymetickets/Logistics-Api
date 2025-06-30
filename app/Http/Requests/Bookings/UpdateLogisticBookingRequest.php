@@ -4,7 +4,7 @@ namespace App\Http\Requests\Bookings;
 use App\Enums\LogisticBookingEnums;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLogisticBookingRequest extends FormRequest
+class UpdateLogisticBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
