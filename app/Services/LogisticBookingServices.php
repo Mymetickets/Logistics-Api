@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
-
+use App\Exceptions\FailedProcessException;
+use App\Enums\StatusCodeEnums;
 use App\Repositories\LogisticBookingRepository;
 use App\Enums\LogisticBookingEnums;
 
@@ -17,7 +18,7 @@ class LogisticBookingServices
     {
         $data= $this->logisticBookingRepository->create($data);
         if (!$data) {
-            abort(401, "Booking creation failed");
+            throw new FailedProcessException('Booking creation failed',StatusCodeEnums::FAILED);
         }
         return $data;
     }
@@ -27,17 +28,22 @@ class LogisticBookingServices
         $booking = $this->logisticBookingRepository->findById($id);
 
     if (!$booking) {
-        abort(401, "Booking not found");;
+        throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
+
     }
 
     if ($booking->status !== LogisticBookingEnums::DRAFT) {
-        abort(401, 'Only bookings in draft status can be updated.');
+
+        throw new FailedProcessException('Only bookings in draft status can be updated',StatusCodeEnums::FAILED);
+
+
     }
 
         $data= $this->logisticBookingRepository->update($id, $data);
 
     if (!$data) {
-        abort(401, "Booking update failed");
+
+        throw new FailedProcessException('Booking update failed',StatusCodeEnums::FAILED);
     }
         return $data;
     }
@@ -46,7 +52,7 @@ class LogisticBookingServices
     {
         $data= $this->logisticBookingRepository->findById($id);
         if (!$data) {
-            abort(401, "Booking not found");
+            throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
         }
         return $data;
     }
@@ -57,12 +63,12 @@ class LogisticBookingServices
     $booking = $this->logisticBookingRepository->findById($id);
 
         if (!$booking) {
-            abort(401, "booking not found");
+          throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
         }
 
         $data= $this->logisticBookingRepository->delete($id);
         if (!$data) {
-            abort(401, "Booking deletion failed");
+            throw new FailedProcessException('Booking Deletion failed',StatusCodeEnums::FAILED);
         }
         return $data;
     }
@@ -76,7 +82,7 @@ class LogisticBookingServices
     {
         $data= $this->logisticBookingRepository->search($param);
         if (!$data) {
-            abort(401, "Bookings not found");
+            throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
         }
         return $data;
     }
@@ -85,7 +91,7 @@ class LogisticBookingServices
     {
         $data= $this->logisticBookingRepository->findByUserId($userId);
         if (!$data) {
-            abort(401, "Bookings not found for this user");
+            throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);
         }
         return $data;
     }
