@@ -21,9 +21,7 @@ class CustomServiceProvider extends ServiceProvider
         $this->app->bind(AuthService::class, function(){
             return new AuthService(new UserRepository);
         });
-        // $this->app->bind(Authenticate::class, function(){
-        //     return new MiddlewareAuthenticate;
-        // });
+        $this->app->bind(Authenticate::class, MiddlewareAuthenticate::class);
     }
 
     /**
