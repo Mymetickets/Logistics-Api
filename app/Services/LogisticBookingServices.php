@@ -4,6 +4,8 @@ use App\Exceptions\FailedProcessException;
 use App\Enums\StatusCodeEnums;
 use App\Repositories\LogisticBookingRepository;
 use App\Enums\LogisticBookingEnums;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 class LogisticBookingServices
 {
@@ -48,7 +50,7 @@ class LogisticBookingServices
         return $data;
     }
 
-    public function getBookingById($id)
+    public function getBookingById(Request $request, $id)
     {
         $data= $this->logisticBookingRepository->findById($id);
         if (!$data) {
@@ -60,7 +62,7 @@ class LogisticBookingServices
     public function deleteBooking($id)
     {
         //checking if ID is valid
-    $booking = $this->logisticBookingRepository->findById($id);
+        $booking = $this->logisticBookingRepository->findById($id);
 
         if (!$booking) {
           throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);

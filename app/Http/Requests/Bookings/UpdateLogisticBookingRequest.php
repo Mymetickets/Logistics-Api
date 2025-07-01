@@ -22,7 +22,6 @@ class UpdateLogisticBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id'           => 'required|exists:users,id',
             'location_id'       => 'sometimes|required|exists:locations,id',
             'transport_mode_id' => 'sometimes|required|exists:transport_modes,id',
             'goods_name'        => 'sometimes|required|string|max:255',
