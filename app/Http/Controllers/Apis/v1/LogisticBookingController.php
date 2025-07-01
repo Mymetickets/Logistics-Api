@@ -20,7 +20,7 @@ class LogisticBookingController extends Controller
 
     public function createBooking(StoreLogisticBookingRequest $request)
     {
-
+            
             $validData = $request->validated();
             $booking = $this->logisticBookingServices->createBooking($validData);
             return ApiResonse::success('Booking created successfully', new LogisticBookingResource($booking));
@@ -72,6 +72,6 @@ class LogisticBookingController extends Controller
 
             $bookings = $this->logisticBookingServices->getBookingsByUserId($userId);
             return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
-        
+
     }
 }
