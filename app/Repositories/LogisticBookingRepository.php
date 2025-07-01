@@ -53,4 +53,10 @@ class LogisticBookingRepository implements IRepository
             ->get();
         return $rec;
     }
+
+    public function findByUserId($userId)
+    {
+        $data = LogisticBooking::where("user_id", $userId)->paginate(pageCount());
+        return $data;
+    }
 }
