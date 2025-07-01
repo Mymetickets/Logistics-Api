@@ -93,6 +93,7 @@ class LogisticBookingService
 
     public function getBookingsByUserId($userId)
     {
+       
         $data= $this->logisticBookingRepository->findByUserId($userId);
         if (is_null($data) || $data->isEmpty()) {
             throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);

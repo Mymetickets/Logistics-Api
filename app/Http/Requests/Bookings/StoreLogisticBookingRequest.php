@@ -22,7 +22,6 @@ class StoreLogisticBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id'           => 'required|exists:users,id',
             'location_id'       => 'required|exists:locations,id',
             'transport_mode_id' => 'required|exists:transport_modes,id',
             'goods_name'        => 'required|string|max:255',

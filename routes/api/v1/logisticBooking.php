@@ -8,5 +8,5 @@ Route::put("/booking-update/{id}", [LogisticBookingController::class, "updateBoo
 Route::get("/booking/{id}", [LogisticBookingController::class, "getBookingById"]);
 Route::delete("/booking-delete/{id}", [LogisticBookingController::class, "deleteBooking"]);
 Route::get("/bookings", [LogisticBookingController::class, "getAllBookings"]);
-Route::get("/bookings/user/{userId}", [LogisticBookingController::class, "getBookingsByUserId"]);
+Route::get("/bookings/user", [LogisticBookingController::class, "getBookingsByUserId"]);
 Route::post("/bookings/search", [LogisticBookingController::class, "searchBookings"]);
