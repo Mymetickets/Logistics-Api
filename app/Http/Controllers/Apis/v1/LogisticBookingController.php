@@ -20,7 +20,8 @@ class LogisticBookingController extends Controller
 
     public function createBooking(StoreLogisticBookingRequest $request)
     {
-            
+        echo "Creating booking..."; // Debugging line, can be removed later
+            exit;
             $validData = $request->validated();
             $booking = $this->logisticBookingServices->createBooking($validData);
             return ApiResonse::success('Booking created successfully', new LogisticBookingResource($booking));

@@ -5,7 +5,7 @@ use App\Enums\StatusCodeEnums;
 use App\Repositories\LogisticBookingRepository;
 use App\Enums\LogisticBookingEnums;
 
-class LogisticBookingServices
+class LogisticBookingService
 {
     protected $logisticBookingRepository;
 
@@ -75,13 +75,17 @@ class LogisticBookingServices
 
     public function getAllBookings()
     {
-        return $this->logisticBookingRepository->all();
+        $data= $this->logisticBookingRepository->all();
+        if ($data->isEmpty()) {
+            throw new FailedProcessException('No bookings found',StatusCodeEnums::FAILED);
+        }
+        return $data;
     }
 
     public function searchBookings($param)
     {
         $data= $this->logisticBookingRepository->search($param);
-        if (!$data) {
+        if (is_null($data) || $data->isEmpty()) {
             throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
         }
         return $data;
@@ -90,7 +94,7 @@ class LogisticBookingServices
     public function getBookingsByUserId($userId)
     {
         $data= $this->logisticBookingRepository->findByUserId($userId);
-        if (!$data) {
+        if (is_null($data) || $data->isEmpty()) {
             throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);
         }
         return $data;
