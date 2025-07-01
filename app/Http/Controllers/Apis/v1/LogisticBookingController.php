@@ -25,7 +25,7 @@ class LogisticBookingController extends Controller
             $booking = $this->logisticBookingServices->createBooking($validData);
             return ApiResonse::success('Booking created successfully', new LogisticBookingResource($booking));
         } catch (FailedProcessException $e) {
-            return ApiResponse::success($e->getMessage());
+            return ApiResponse::failed($e->getMessage());
         }
     }
 
@@ -36,7 +36,7 @@ class LogisticBookingController extends Controller
             $booking = $this->logisticBookingServices->updateBooking($id, $validData);
             return ApiResponse::success('Booking updated successfully', new LogisticBookingResource($booking));
         } catch (FailedProcessException $e) {
-            return ApiResponse::success($e->getMessage());
+            return ApiResponse::failed($e->getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ class LogisticBookingController extends Controller
 
         return ApiResponse::success('User found', new LogisticBookingResource($booking));
         } catch (FailedProcessException $e) {
-            return ApiResponse::success($e->getMessage());
+            return ApiResponse::failed($e->getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ class LogisticBookingController extends Controller
             $deleted = $this->logisticBookingServices->deleteBooking($id);
             return ApiResponse::success('Booking deleted successfully', new LogistBookingResource($booking));
         } catch (FailedProcessException $e) {
-            return ApiResponse::success($e->getMessage());
+            return ApiResponse::failed($e->getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ class LogisticBookingController extends Controller
             $bookings = $this->logisticBookingServices->getAllBookings();
             return ApiResponse::success('Bookings retrieved successfully', LogisticBookingResource::collection($bookings));
         } catch (FailedProcessException $e) {
-            return ApiResponse::success($e->getMessage());
+            return ApiResponse::failed($e->getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ class LogisticBookingController extends Controller
             $bookings = $this->logisticBookingServices->searchBookings($param);
             return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
         } catch (FailedProcessException $e) {
-            return ApiResponse::success($e->getMessage());
+            return ApiResponse::failed($e->getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ class LogisticBookingController extends Controller
             $bookings = $this->logisticBookingServices->getBookingsByUserId($userId);
             return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
         } catch (FailedProcessException $e) {
-            return ApiResponse::success($e->getMessage());
+            return ApiResponse::failed($e->getMessage());
         }
     }
 }
