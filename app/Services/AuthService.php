@@ -28,8 +28,17 @@ class AuthService
             abort(401, "Invalid login details");
         if(!Hash::check($data["password"], $user->password))
             abort(401, "Invalid login details");
+        $this->userRepo->update($user->id, [
+            "last_login" => now()->toDateTime()
+        ]);
         $token = $this->userRepo->createAccessToken($user, UserEnums::tokenIdentifier($user->id));
         $user->token = $token;
+        return $user;
+    }
+
+    public function userLogout(){
+        $user = auth()->user();
+        $this->userRepo->revokeAccessToken($user);
         return $user;
     }
 }

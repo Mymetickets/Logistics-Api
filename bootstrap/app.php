@@ -41,6 +41,7 @@ return Application::configure(basePath: dirname(__DIR__))
             $errors = $body["errors"] ?? [];
             return ApiResponse::custom($code, $ex->getMessage(), $data, $errors, $ex->getStatusCode() ?? 422);
         });
+
         $exceptions->render(function(ValidationException $ex){
             return ApiResponse::failed($ex->getMessage(), [], $ex->errors(), 400);
         });
