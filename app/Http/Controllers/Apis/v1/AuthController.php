@@ -29,4 +29,10 @@ class AuthController extends Controller
         $resp = $this->authService->userLogin($validData);
         return ApiResponse::success("Login successful", new UserResource($resp));
     }
+
+    public function logout(Request $request){
+        return $request->user();
+        $this->authService->userLogout();
+        return ApiResponse::success("User logged out successfully");
+    }
 }
