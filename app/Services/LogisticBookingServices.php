@@ -43,19 +43,20 @@ class LogisticBookingServices
 
     }
 
-        $data= $this->logisticBookingRepository->update($id, $data);
+       $updatedBooking= $this->logisticBookingRepository->update($id, $data);
 
-    if (!$data) {
+    if (!$updatedBooking) {
 
         throw new FailedProcessException('Booking update failed',StatusCodeEnums::FAILED);
     }
 
         // Notify the user about the booking status change
-        $user = Auth::user();
+        $user = User::find($booking->user_id);
         if ($user) {
-            Notification::send($user, new BookingStatusChanged($id,$request->status));
+            Notification::send($user, new BookingStatusChanged($id,$data['status']));
         }
-        return $data;
+
+        return $updatedBooking;
     }
 
     public function getBookingById(Request $request, $id)
