@@ -34,13 +34,9 @@ use ApiResponse; // Using the APIResponseTrait
      */
     public function store(StoreStateRequest $request)
     {
-        try {
             $state = $this->stateService->createState($request->validated());
             return $this->successResponse('State created successfully', new StateResource($state), 201);
-        } catch (\Exception $e) {
-            return $this->errorResponse('Failed to create state', 500, $e->getMessage());
         }
-    }
-
+    
     // Other CRUD methods (show, update, destroy) will go here later
 }

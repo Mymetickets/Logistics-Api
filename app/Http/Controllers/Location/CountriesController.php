@@ -34,12 +34,8 @@ use ApiResponse; // Using the APIResponseTrait
      */
     public function store(StoreCountryRequest $request)
     {
-        try {
-            $country = $this->countryService->createCountry($request->validated());
-            return $this->successResponse('Country created successfully', new CountryResource($country), 201);
-        } catch (\Exception $e) {
-            return $this->errorResponse('Failed to create country', 500, $e->getMessage());
-        }
+        $country = $this->countryService->createCountry($request->validated());
+        return $this->successResponse('Country created successfully', new CountryResource($country), 201);
     }
 
     // Other CRUD methods (show, update, destroy) will go here later

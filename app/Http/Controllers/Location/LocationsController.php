@@ -34,12 +34,9 @@ use ApiResponse; // Using the APIResponseTrait
      */
     public function store(StoreLocationRequest $request)
     {
-        try {
-            $location = $this->locationService->createLocation($request->validated());
-            return $this->successResponse('Location created successfully', new LocationResource($location), 201);
-        } catch (\Exception $e) {
-            return $this->errorResponse('Failed to create location', 500, $e->getMessage());
-        }
+        $location = $this->locationService->createLocation($request->validated());
+        return $this->successResponse('Location created successfully', new LocationResource($location), 201);
+    
     }
 
     // Other CRUD methods (show, update, destroy) will go here later
