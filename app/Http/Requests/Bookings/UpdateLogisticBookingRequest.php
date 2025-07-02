@@ -22,6 +22,7 @@ class UpdateLogisticBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id'                => 'required|exists:logistic_bookings,id',
             'location_id'       => 'sometimes|required|exists:locations,id',
             'transport_mode_id' => 'sometimes|required|exists:transport_modes,id',
             'goods_name'        => 'sometimes|required|string|max:255',
@@ -31,7 +32,7 @@ class UpdateLogisticBookingRequest extends FormRequest
             'receiver_phone'    => 'sometimes|required|string|max:20',
             'receiver_address'  => 'sometimes|required|string|max:500',
             'status' => 'sometimes|required|in:' . LogisticBookingEnums::CANCEL,
-            
+
         ];
     }
 }
