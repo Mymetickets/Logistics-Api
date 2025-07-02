@@ -11,6 +11,7 @@ use App\Http\Requests\Bookings\StoreLogisticBookingRequest;
 use App\Http\Requests\Bookings\UpdateLogisticBookingRequest;
 use App\Services\LogisticBookingServices;
 
+
 class LogisticBookingController extends Controller
 {
     public function __construct(private LogisticBookingServices $logisticBookingServices)
@@ -31,13 +32,13 @@ class LogisticBookingController extends Controller
 
     public function updateBooking(UpdateLogisticBookingRequest $request, $id)
     {
-        try{
+
             $validData = $request->validated();
             $booking = $this->logisticBookingServices->updateBooking($id, $validData);
             return ApiResponse::success('Booking updated successfully', new LogisticBookingResource($booking));
-        } catch (FailedProcessException $e) {
+
             return ApiResponse::failed($e->getMessage());
-        }
+
     }
 
     public function getBookingById($id)

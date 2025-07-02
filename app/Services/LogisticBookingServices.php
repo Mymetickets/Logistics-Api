@@ -6,6 +6,8 @@ use App\Repositories\LogisticBookingRepository;
 use App\Enums\LogisticBookingEnums;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use App\Notifications\BookingStatusChanged;
+use Illuminate\Support\Facades\Notification;
 
 class LogisticBookingServices
 {
@@ -47,6 +49,12 @@ class LogisticBookingServices
 
         throw new FailedProcessException('Booking update failed',StatusCodeEnums::FAILED);
     }
+
+        // Notify the user about the booking status change
+        $user = Auth::user();
+        if ($user) {
+            Notification::send($user, new BookingStatusChanged($id,$request->status));
+        }
         return $data;
     }
 

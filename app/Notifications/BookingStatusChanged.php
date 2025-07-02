@@ -11,11 +11,13 @@ class BookingStatusChanged extends Notification
 {
     use Queueable;
 
-    protected $booking;
+    protected $id;
+    protected $status;
 
-    public function __construct($booking)
+    public function __construct($id,$status)
     {
-        $this->booking = $booking;
+        $this->id = $id;
+        $this->status = $status;
     }
 
     public function via($notifiable)
@@ -26,9 +28,9 @@ class BookingStatusChanged extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'booking_id' => $this->booking->id,
-            'status' => $this->booking->status,
-            'message' => 'Your booking status changed to ' . $this->booking->status,
+            'booking_id' => $this->id,
+            'status' => $this->status,
+            'message' => 'Your booking status changed to ' . $this->status,
         ];
     }
 }
