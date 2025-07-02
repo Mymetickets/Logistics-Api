@@ -23,7 +23,7 @@ class LogisticBookingController extends Controller
         try{
             $validData = $request->validated();
             $booking = $this->logisticBookingServices->createBooking($validData);
-            return ApiResonse::success('Booking created successfully', new LogisticBookingResource($booking));
+            return ApiResponse::success('Booking created successfully', new LogisticBookingResource($booking));
         } catch (FailedProcessException $e) {
             return ApiResponse::failed($e->getMessage());
         }
@@ -55,7 +55,7 @@ class LogisticBookingController extends Controller
     {
         try{
             $deleted = $this->logisticBookingServices->deleteBooking($id);
-            return ApiResponse::success('Booking deleted successfully', new LogistBookingResource($booking));
+            return ApiResponse::success('Booking deleted successfully', new LogisticBookingResource($deleted));
         } catch (FailedProcessException $e) {
             return ApiResponse::failed($e->getMessage());
         }

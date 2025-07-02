@@ -2,7 +2,8 @@
 
 namespace App\Services\Transportation;
 
-
+use App\Enums\StatusCodeEnums;
+use App\Exceptions\FailedProcessException;
 use App\Services\BaseService;
 use App\Repositories\Transportations\TransportationModelRepository;
 
@@ -29,13 +30,16 @@ class TransportationModelService extends BaseService
     {
         $categoryExist = $this->TransportationMode->findbyId($reqData['category_id']);
         if (blank($categoryExist)) {
-            abort(401, "category Id  not Found");
+            throw new FailedProcessException("category Id  not Found", StatusCodeEnums::FAILED);
         }
         $nameExist = $this->TransportationModel->findData("name", $reqData['name']);
-        if ($nameExist) {
-            abort(401, "Transportation Model Name Exist");
+        if (blank($nameExist)) {
+            throw new FailedProcessException("Transportation Model Name Exist", StatusCodeEnums::FAILED);
         }
         $resp = $this->TransportationModel->create($reqData);
+        if (blank($resp)) {
+            throw new FailedProcessException("Transportation Model Creation Failed", StatusCodeEnums::FAILED);
+        }
         return $resp;
     }
 
@@ -44,7 +48,7 @@ class TransportationModelService extends BaseService
         $resp = $this->TransportationModel->findById($id);
 
         if (blank($resp)) {
-            abort(401, "Transportation model not found");
+            throw new FailedProcessException("Transportation model not found", StatusCodeEnums::FAILED);
         }
         return $resp;
     }
@@ -53,9 +57,12 @@ class TransportationModelService extends BaseService
     {
         $checkId = $this->findbyId($id);
         if (blank($checkId)) {
-            abort(401, "Transportation model not found");
+            throw new FailedProcessException("Transportation model not found", StatusCodeEnums::FAILED);
         }
-        $resp = $this->TransportationModel->update($reqData, $id);
+        $resp = $this->TransportationModel->update($id, $reqData);
+        if (blank($resp)) {
+            throw new FailedProcessException("Transportation model Update Failed", StatusCodeEnums::FAILED);
+        }
         return $resp;
     }
 
@@ -63,9 +70,12 @@ class TransportationModelService extends BaseService
     {
         $checkId = $this->findbyId($id);
         if (blank($checkId)) {
-            abort(401, "Transportation model not found");
+            throw new FailedProcessException("Transportation Model Not Found", StatusCodeEnums::FAILED);
         }
         $resp = $this->TransportationModel->delete($id);
+        if (blank($resp)) {
+            throw new FailedProcessException("Transportation Model Deletion Failed", StatusCodeEnums::FAILED);
+        }
         return $resp;
     }
 }

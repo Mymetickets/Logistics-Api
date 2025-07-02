@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Apis\v1\Transportation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transportations\TransportationModeCategoryRequest;
+
+use App\Http\Requests\Transportations\UpdateTransportationModeCategoryRequest;
 use Illuminate\Http\Request;
 use App\Services\Transportation\TransportationModeCategoryService;
 use App\Class\ApiResponse;
@@ -21,9 +23,9 @@ class TransportationModeCategoryController extends Controller
 
     public function create(TransportationModeCategoryRequest $request)
     {
-        $validData=$request->validated();
+        $validData = $request->validated();
         $data = $this->TransportationModeCategory->create($validData);
-       return ApiResponse::success("Transportation Mode Created Successfully",new TransportationCategoryResource($data));
+        return ApiResponse::success("Transportation Mode Created Successfully", new TransportationCategoryResource($data));
     }   // POST /TransportationModeCategory
     public function show($id)
     {
@@ -31,15 +33,19 @@ class TransportationModeCategoryController extends Controller
         return ApiResponse::success("Transportation Mode Found Successfully", new TransportationCategoryResource($data));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateTransportationModeCategoryRequest $request, $id)
     {
-        $data = $this->TransportationModeCategory->update($request, $id);
-        return Apiresponse::success("Transportation Mode Updated sucessfully", new TransportationCategoryResource($data));
+        $data = $this->TransportationModeCategory->update($id, $request->validated());
+
+        return Apiresponse::success(
+            "Transportation Mode Updated successfully",
+            new TransportationCategoryResource($data)
+        );
     }
-    public function destroy($id)
+
+    public function delete($id)
     {
         $data = $this->TransportationModeCategory->delete($id);
         return Apiresponse::success("Transportation Mode Deleted");
-
     }
 }

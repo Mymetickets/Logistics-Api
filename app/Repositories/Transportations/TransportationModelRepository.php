@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Repositories\Transportations;
+
 use App\Repositories\IRepository;
-use App\Models\Transportations\TransportationModel;
+use App\Models\Transportations\TransportMode;
 
 class  TransportationModelRepository implements IRepository
 {
@@ -13,41 +14,54 @@ class  TransportationModelRepository implements IRepository
     {
         //
     }
-    public function all(){
-        $data = TransportationModel::query()->paginate();
+    public function all()
+    {
+        $data = TransportMode::query()->paginate();
         return $data;
     }
 
-    public function findById($id){
-        $data = TransportationModel::find($id);
+    public function findById($id)
+    {
+        $data = TransportMode::find($id);
         return $data;
     }
 
-    public function create($data){
-        $record = TransportationModel::create($data);
+    public function create($data)
+    {
+        $record = TransportMode::create($data);
         return $record;
     }
-    public function update($id, $data){
-        $rec = TransportationModel::where("id", $id)->update($data);
+    public function update($id, $data)
+    {
+        $record = TransportMode::find($id);
+        if (!$record) {
+            return null;
+        }
+
+        $record->update($data);  // updates the fields
+        return $record;          // returns the model instance
+    }
+
+
+    public function delete($id)
+    {
+        $rec = TransportMode::where("id", $id)->delete();
         return $rec;
     }
 
-    public function delete($id){
-        $rec = TransportationModel::where("id", $id)->delete();
-        return $rec;
-    }
-
-    public function search($param){
-        $rec = TransportationModel::query()
+    public function search($param)
+    {
+        $rec = TransportMode::query()
             ->where("name", "LIKE", "%$param%")
             ->orWhere("slug", "LIKE", "%$param%")
             ->orWhere("description", "=", $param)
-             ->orWhere("status", "LIKE", "%$param%")
+            ->orWhere("status", "LIKE", "%$param%")
             ->get();
         return $rec;
     }
-    public function findData($column, $data){
-        $rec = TransportationModel::query()->where($column,$data);
+    public function findData($column, $data)
+    {
+        $rec = TransportMode::query()->where($column, $data);
         return $rec;
     }
 }

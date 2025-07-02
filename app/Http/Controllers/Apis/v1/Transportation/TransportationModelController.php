@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Class\ApiResponse;
 use App\Http\Requests\Transportations\TransportationModelRequest;
+use App\Http\Requests\Transportations\UpdateTransportationModelRequest;
 use App\Services\Transportation\TransportationModelService;
 use App\Http\Resources\Transportations\TransportationModeResource;
 
@@ -17,43 +18,37 @@ class TransportationModelController extends Controller
     {
         $data = $this->transportationModelService->All();
 
-        return Apiresponse::success("All Transportation Model fetched successfully.", new TransportationModeResource($data));
+        return Apiresponse::success("All Transportation Model fetched successfully.", $data);
     }
 
     public function create(TransportationModelRequest $request)
     {
         $data = $this->transportationModelService->create($request->validated());
-        return ApiResponse::success("Transportation Model created successfull",new TransportationModeResource($data));
+        return ApiResponse::success("Transportation Model created successfull", new TransportationModeResource($data));
     }
     public function show($id)
     {
         $data = $this->transportationModelService->findbyId($id);
-
-        $message = "Transportation Model Found Successfully";
-        return ApiResponse::success($message,new TransportationModeResource($data));
+        return ApiResponse::success("Transportation Model Found Successfully", new TransportationModeResource($data));
     }
     public function find(Request $request)
     {
         $data = $this->transportationModelService->findbyId($request);
 
-        $message = "Transportation Model Found Successfully";
-        return Apiresponse::success($message,new TransportationModeResource($data));
 
+        return Apiresponse::success("Transportation Model Found Successfully", new TransportationModeResource($data));
     }
-    public function update(Request $request, $id)
+    public function update(UpdateTransportationModelRequest $request, $id)
     {
-        $data = $this->transportationModelService->update($request, $id);
+        $data = $this->transportationModelService->update(  $request->validated(),$id);
 
-        $message = "Transportation Model Updated sucessfully";
-        return ApiResponse::success($message,new TransportationModeResource($data));
-
+        return ApiResponse::success("Transportation Model Updated sucessfully", new TransportationModeResource($data));
     }
-    public function destroy($id)
+    public function delete($id)
     {
         $data = $this->transportationModelService->delete($id);
 
-        $message = "Transportation Model Deleted";
-        return ApiResponse::success($message,new TransportationModeResource($data));
 
+        return ApiResponse::success("Transportation Model Deleted");
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $tabele->string('city');
+            $table->string('city');
             $table->foreignId('country_id')->constrained('countries', 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('state_id')->constrained('states', 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('status')->default(false);

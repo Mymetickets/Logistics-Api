@@ -3,6 +3,9 @@
 namespace App\Services\Transportation;
 
 use App\Services\BaseService;
+
+use App\Exceptions\FailedProcessException;
+use App\Enums\StatusCodeEnums;
 use App\Repositories\Transportations\TransportationCategoryRepository;
 
 class TransportationModeCategoryService extends BaseService
@@ -21,45 +24,54 @@ class TransportationModeCategoryService extends BaseService
 
     public function create($reqData)
     {
-        $slugExist = $this->TransportationCategory->findData("slug", $reqData['slug']);
-        if (blank($slugExist)) {
-            abort(401, 'Slug already exist');
+        // Check for duplicate slug
+        $slugExists = $this->TransportationCategory->findData("slug", $reqData['slug']);
+        if (!blank($slugExists)) {
+            throw new FailedProcessException('Slug already exists', StatusCodeEnums::FAILED);
         }
-        $nameExist = $this->TransportationCategory->findData("name", $reqData['name']);
-        if (blank($nameExist)) {
-            abort(401, 'Name already exist');
+
+
+        $nameExists = $this->TransportationCategory->findData("name", $reqData['name']);
+        if (!blank($nameExists)) {
+            throw new FailedProcessException('Name already exists', StatusCodeEnums::FAILED);
         }
-        $resp = $this->TransportationCategory->create($reqData);
-        return $resp;
+
+        // Create new record
+        return $this->TransportationCategory->create($reqData);
     }
 
     public function findbyId($id)
     {
         $resp = $this->TransportationCategory->findById($id);
-         if (blank($resp)) {
-            abort(401, "Transportation Mode not Found");
+        if (blank($resp)) {
+            throw new FailedProcessException("Transportation Mode not Found", StatusCodeEnums::FAILED);
         }
         return $resp;
     }
 
-    public function update($reqData, $id)
+    public function update($id, $reqData)
     {
         $mode = $this->TransportationCategory->findById($id);
+
         if (blank($mode)) {
-            abort(401, "Transportation Mode not Found");
+            throw new FailedProcessException("Transportation Mode not Found", StatusCodeEnums::FAILED);
         }
-        $resp = $this->TransportationCategory->update($reqData, $id);
+
+        $resp = $this->TransportationCategory->update($id, $reqData); // ✅ Fixed order
+
         if (blank($resp)) {
-            abort(401, "error occurred");
+            throw new FailedProcessException("Transportation Mode Update Failed", StatusCodeEnums::FAILED);
         }
+
         return $resp;
     }
+
 
     public function delete($id)
     {
         $resp = $this->TransportationCategory->delete($id);
-        if (blank($resp)) {
-            abort(401, "Error occurred");
+        if (!$resp) {
+            throw new FailedProcessException("Transportation Mode Deletion Failed", StatusCodeEnums::FAILED);
         }
         return $resp;
     }
