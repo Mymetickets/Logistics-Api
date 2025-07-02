@@ -9,4 +9,8 @@ enum UserEnums
     const ACTIVE = 'active';
     const INACTIVE = 'inactive';
     const SUSPENDED = 'suspended';
+
+    static function tokenIdentifier($id){
+        return "app_token_".$id;
+    }
 }

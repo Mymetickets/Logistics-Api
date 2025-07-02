@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('address');
             $table->string('password')->bcrypt();
-            $table->timestamp('last_login');
+            $table->timestamp('last_login')->nullable();
            $table->enum('status', [UserEnums::ACTIVE, UserEnums::UNVERIFIED, UserEnums::SUSPENDED])->default(UserEnums::UNVERIFIED);
             $table->rememberToken();
             $table->timestamps();
