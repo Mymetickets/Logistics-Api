@@ -22,7 +22,7 @@ class LogisticBookingRepository implements IRepository
 
     public function findById($id)
     {
-        $data = LogisticBooking::with(['user', 'location', 'transportMode'])->find($id);
+        $data = LogisticBooking::with(['user', 'location', 'transportMode'])->findOrFail($id);
         return $data;
     }
 
