@@ -4,8 +4,11 @@ use App\Exceptions\FailedProcessException;
 use App\Enums\StatusCodeEnums;
 use App\Repositories\LogisticBookingRepository;
 use App\Enums\LogisticBookingEnums;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use App\Notifications\BookingStatusChanged;
+use Illuminate\Support\Facades\Notification;
 
 class LogisticBookingService
 {
@@ -41,16 +44,23 @@ class LogisticBookingService
 
     }
 
-        $data= $this->logisticBookingRepository->update($id, $data);
+       $updatedBooking= $this->logisticBookingRepository->update($id, $data);
 
-    if (!$data) {
+    if (!$updatedBooking) {
 
         throw new FailedProcessException('Booking update failed',StatusCodeEnums::FAILED);
     }
-        return $data;
+
+        // Notify the user about the booking status change
+        $user = User::find($booking->user_id);
+        if ($user) {
+            Notification::send($user, new BookingStatusChanged($id,$data['status']));
+        }
+
+        return $updatedBooking;
     }
 
-    public function getBookingById(Request $request, $id)
+    public function getBookingById($id)
     {
         $data= $this->logisticBookingRepository->findById($id);
         if (!$data) {

@@ -11,6 +11,7 @@ use App\Http\Requests\Bookings\StoreLogisticBookingRequest;
 use App\Http\Requests\Bookings\UpdateLogisticBookingRequest;
 use App\Services\LogisticBookingService;
 
+
 class LogisticBookingController extends Controller
 {
     public function __construct(private LogisticBookingService $logisticBookingServices)
@@ -23,7 +24,7 @@ class LogisticBookingController extends Controller
             // Validate the request data
             $validData = $request->validated();
             $booking = $this->logisticBookingServices->createBooking($validData);
-            return ApiResonse::success('Booking created successfully', new LogisticBookingResource($booking));
+            return ApiResponse::success('Booking created successfully', new LogisticBookingResource($booking));
 
     }
 
@@ -46,7 +47,7 @@ class LogisticBookingController extends Controller
     {
 
             $deleted = $this->logisticBookingServices->deleteBooking($id);
-            return ApiResponse::success('Booking deleted successfully', new LogistBookingResource($booking));
+            return ApiResponse::success('Booking deleted successfully');
 
     }
 
