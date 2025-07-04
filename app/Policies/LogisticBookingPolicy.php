@@ -21,4 +21,16 @@ class LogisticBookingPolicy
 
     }
 
+    public function view(User $user, LogisticBooking $booking): bool
+    {
+    // Admins can view all bookings
+    if ($user->hasRole('admin')) {
+        return true;
+    }
+
+    // Regular users can only view their own bookings
+    return $booking->user_id === $user->id;
+}
+
+
 }

@@ -39,7 +39,7 @@ class LogisticBookingController extends Controller
 
     public function getBookingById($id)
     {
-         $booking = $this->logisticBookingServices->getBookingById($id);
+        $booking = $this->logisticBookingServices->getBookingById($id);
         return ApiResponse::success('User found', new LogisticBookingResource($booking));
     }
 
@@ -53,7 +53,7 @@ class LogisticBookingController extends Controller
 
     public function getAllBookings()
     {
-            
+
             $bookings = $this->logisticBookingServices->getAllBookings();
             return ApiResponse::success('Bookings retrieved successfully', LogisticBookingResource::collection($bookings));
 
