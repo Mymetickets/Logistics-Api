@@ -16,13 +16,14 @@ class  TransportationModelRepository implements IRepository
     }
     public function all()
     {
-        $data = TransportMode::query()->paginate();
+        $data = TransportMode::with('category')->paginate(pageCount()); // eager-load category
         return $data;
     }
 
+
     public function findById($id)
     {
-        $data = TransportMode::find($id);
+        $data = TransportMode::with("category")->findorFail($id);
         return $data;
     }
 
@@ -33,11 +34,7 @@ class  TransportationModelRepository implements IRepository
     }
     public function update($id, $data)
     {
-        $record = TransportMode::find($id);
-        if (!$record) {
-            return null;
-        }
-
+        $record = TransportMode::findOrFail($id);
         $record->update($data);  // updates the fields
         return $record;          // returns the model instance
     }

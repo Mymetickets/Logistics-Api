@@ -16,10 +16,13 @@ class TransportationModelController extends Controller
     public function __construct(private TransportationModelService $transportationModelService) {}
     public function index(Request $request)
     {
-        $data = $this->transportationModelService->All();
-
-        return Apiresponse::success("All Transportation Model fetched successfully.", $data);
+        $data = $this->transportationModelService->All(['category']);
+        return ApiResponse::success(
+            "All Transportation Models fetched successfully.",
+            TransportationModeResource::collection($data)
+        );
     }
+
 
     public function create(TransportationModelRequest $request)
     {
@@ -40,7 +43,7 @@ class TransportationModelController extends Controller
     }
     public function update(UpdateTransportationModelRequest $request, $id)
     {
-        $data = $this->transportationModelService->update(  $request->validated(),$id);
+        $data = $this->transportationModelService->update($request->validated(), $id);
 
         return ApiResponse::success("Transportation Model Updated sucessfully", new TransportationModeResource($data));
     }

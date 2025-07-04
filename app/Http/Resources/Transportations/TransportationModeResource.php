@@ -17,11 +17,15 @@ class TransportationModeResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "category_name" => $this->when(
+                $this->relationLoaded('category') && $this->category,
+                fn() => $this->category->name
+            ),
             "category_id" => $this->category_id,
             "description" => $this->description,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            "status" => $this->status,
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_at,
         ];
     }
 }

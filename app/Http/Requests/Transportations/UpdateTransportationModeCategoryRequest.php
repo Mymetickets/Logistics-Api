@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Transportations;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTransportationModeCategoryRequest extends FormRequest
 {
@@ -21,10 +22,12 @@ class UpdateTransportationModeCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => ['nullable'],
-            'slug' => ['nullable'],
-            'description' => ['nullable']
-        ];
+        $id = $this->route('id');
+
+        $rules['name'][] = Rule::unique('transport_modes', 'name')->ignore($id);
+        $rules['slug'][] = Rule::unique('transport_modes', 'slug')->ignore($id);
+
+
+        return $rules;
     }
 }
