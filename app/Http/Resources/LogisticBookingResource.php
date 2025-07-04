@@ -21,9 +21,12 @@ class LogisticBookingResource extends JsonResource
         //return parent::toArray($request);
         return [
             'id' => $this->id,
-            'user_id' =>new UserResource($this->whenLoaded('user')),
-            'location_id'       => new LocationResource($this->whenLoaded('location')),
-            'transport_mode_id' => new TransportModeResource($this->whenLoaded('transportMode')),
+            'user_id' => $this->user_id,
+            'user' => new UserResource($this->whenLoaded('user')),
+            'location_id' => $this->location_id,
+            'location'       => new LocationResource($this->whenLoaded('location')),
+            'transport_mode_id' => $this->transport_mode_id,
+            'transport_mode' => new TransportModeResource($this->whenLoaded('transportMode')),
             'goods_name' => $this->goods_name,
             'weight' => $this->weight,
             'receiver_name' => $this->receiver_name,
