@@ -37,7 +37,7 @@ class LogisticBookingController extends Controller
             $booking = $this->logisticBookingServices->updateBooking($id, $validData);
             return ApiResponse::success('Booking updated successfully', new LogisticBookingResource($booking));
 
-            return ApiResponse::failed($e->getMessage());
+           
 
     }
 
