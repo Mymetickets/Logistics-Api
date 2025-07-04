@@ -25,7 +25,6 @@ class LogisticBookingController extends Controller
             $validData = $request->validated();
             $booking = $this->logisticBookingServices->createBooking($validData);
             return ApiResponse::success('Booking created successfully', new LogisticBookingResource($booking));
-
     }
 
     public function updateBooking(UpdateLogisticBookingRequest $request, $id)
@@ -45,10 +44,8 @@ class LogisticBookingController extends Controller
 
     public function deleteBooking($id)
     {
-
             $deleted = $this->logisticBookingServices->deleteBooking($id);
             return ApiResponse::success('Booking deleted successfully');
-
     }
 
     public function getAllBookings()

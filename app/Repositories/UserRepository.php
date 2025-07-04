@@ -6,7 +6,7 @@ use App\Enums\UserEnums;
 use App\Models\User;
 use App\Traits\HasAuthToken;
 
-class UserRepository implements IRepository
+class  UserRepository implements IRepository
 {
     use HasAuthToken;
     /**
