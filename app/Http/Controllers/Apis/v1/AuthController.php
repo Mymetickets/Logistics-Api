@@ -6,6 +6,7 @@ use App\Class\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\SignupRequest;
+use App\Http\Resources\AdminResource;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
@@ -28,6 +29,12 @@ class AuthController extends Controller
         $validData = $request->validated();
         $resp = $this->authService->userLogin($validData);
         return ApiResponse::success("Login successful", new UserResource($resp));
+    }
+
+    public function adminLogin(LoginRequest $request){
+        $data = $request->validated();
+        $resp = $this->authService->adminLogin($data);
+        return ApiResponse::success("Login successful", new AdminResource($resp));
     }
 
     public function logout(Request $request){
