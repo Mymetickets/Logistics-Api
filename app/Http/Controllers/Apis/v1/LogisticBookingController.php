@@ -53,7 +53,7 @@ class LogisticBookingController extends Controller
 
     public function getAllBookings()
     {
-
+            
             $bookings = $this->logisticBookingServices->getAllBookings();
             return ApiResponse::success('Bookings retrieved successfully', LogisticBookingResource::collection($bookings));
 

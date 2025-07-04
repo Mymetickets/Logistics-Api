@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Request;
 use App\Notifications\BookingStatusChanged;
 use Illuminate\Support\Facades\Notification;
 
+
 class LogisticBookingService
 {
     protected $logisticBookingRepository;
@@ -87,6 +88,9 @@ class LogisticBookingService
 
     public function getAllBookings()
     {
+        // Check if the user has permission to view all bookings
+        $this->authorize('viewAny', LogisticBooking::class);
+
         $data= $this->logisticBookingRepository->all();
         if ($data->isEmpty()) {
             throw new FailedProcessException('No bookings found',StatusCodeEnums::FAILED);
@@ -105,7 +109,7 @@ class LogisticBookingService
 
     public function getBookingsByUserId($userId)
     {
-       
+
         $data= $this->logisticBookingRepository->findByUserId($userId);
         if (is_null($data) || $data->isEmpty()) {
             throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);
