@@ -46,8 +46,8 @@ class LogisticBookingRepository implements IRepository
 
     public function search($param)
     {
-        $rec = LogisticBooking::with(['user', 'location', 'transportMode'])
-            ->where("good_name", "LIKE", "%$param%")
+        $rec = LogisticBooking::query()
+            ->where("goods_name", "LIKE", "%$param%")
             ->orWhere("status", "=", $param)
             ->orWhere("receiver_name", "LIKE", "%$param%")
             ->get();

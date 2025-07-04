@@ -4,12 +4,13 @@ use App\Exceptions\FailedProcessException;
 use App\Enums\StatusCodeEnums;
 use App\Repositories\LogisticBookingRepository;
 use App\Enums\LogisticBookingEnums;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Notifications\BookingStatusChanged;
 use Illuminate\Support\Facades\Notification;
 
-class LogisticBookingServices
+class LogisticBookingService
 {
     protected $logisticBookingRepository;
 
@@ -59,7 +60,7 @@ class LogisticBookingServices
         return $updatedBooking;
     }
 
-    public function getBookingById(Request $request, $id)
+    public function getBookingById($id)
     {
         $data= $this->logisticBookingRepository->findById($id);
         if (!$data) {
@@ -86,13 +87,17 @@ class LogisticBookingServices
 
     public function getAllBookings()
     {
-        return $this->logisticBookingRepository->all();
+        $data= $this->logisticBookingRepository->all();
+        if ($data->isEmpty()) {
+            throw new FailedProcessException('No bookings found',StatusCodeEnums::FAILED);
+        }
+        return $data;
     }
 
     public function searchBookings($param)
     {
         $data= $this->logisticBookingRepository->search($param);
-        if (!$data) {
+        if (is_null($data) || $data->isEmpty()) {
             throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
         }
         return $data;
@@ -100,8 +105,9 @@ class LogisticBookingServices
 
     public function getBookingsByUserId($userId)
     {
+       
         $data= $this->logisticBookingRepository->findByUserId($userId);
-        if (!$data) {
+        if (is_null($data) || $data->isEmpty()) {
             throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);
         }
         return $data;
