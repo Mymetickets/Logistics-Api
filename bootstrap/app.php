@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             registerApiRouteV1("auth", "auth.php");
             registerApiRouteV1("logistic", "logisticBooking.php");
+            registerApiRouteV1('Transportation','Transportation.php');
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
@@ -35,7 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-        $exceptions->render(function(HttpException $ex){
+        $exceptions->render(function (HttpException $ex) {
             $body = $ex->getHeaders();
             $code = $body["code"] ?? StatusCodeEnums::FAILED;
             $data = $body["data"] ?? [];
