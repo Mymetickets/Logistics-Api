@@ -15,8 +15,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 // Define routes for Admin access
-Route::middleware(["auth:sanctum", "auth.admin"])->group(function(){
-    Route::get("/admin/bookings", [LogisticBookingController::class, "getAllBookings"]);
-    Route::get("/admin/bookings/user/{id}", [LogisticBookingController::class, "adminGetBookingsByUserId"]);
-    Route::get("/admin/booking/{id}", [LogisticBookingController::class, "getBookingById"]);
+Route::middleware(["auth:sanctum", "auth.admin"])
+    ->prefix('/admin/bookings')
+    ->group(function(){
+        Route::get("/", [LogisticBookingController::class, "getAllBookings"]);
+        Route::get("/user/{id}", [LogisticBookingController::class, "adminGetBookingsByUserId"]);
+        Route::get("/{id}", [LogisticBookingController::class, "getBookingById"]);
 });
