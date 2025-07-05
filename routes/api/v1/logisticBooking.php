@@ -13,3 +13,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put("/booking-update/{id}", [LogisticBookingController::class, "updateBooking"]);
     Route::delete("/booking-delete/{id}", [LogisticBookingController::class, "deleteBooking"]);
 });
+
+// Define routes for Admin access
+Route::middleware(["auth:sanctum", "auth.admin"])
+    ->prefix('/admin/bookings')
+    ->group(function(){
+        Route::get("/", [LogisticBookingController::class, "getAllBookings"]);
+        Route::get("/user/{id}", [LogisticBookingController::class, "adminGetBookingsByUserId"]);
+        Route::get("/{id}", [LogisticBookingController::class, "getBookingById"]);
+});

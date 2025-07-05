@@ -38,7 +38,7 @@ class LogisticBookingController extends Controller
 
     public function getBookingById($id)
     {
-         $booking = $this->logisticBookingServices->getBookingById($id);
+        $booking = $this->logisticBookingServices->getBookingById($id);
         return ApiResponse::success('User found', new LogisticBookingResource($booking));
     }
 
@@ -71,5 +71,10 @@ class LogisticBookingController extends Controller
             $bookings = $this->logisticBookingServices->getBookingsByUserId($userId);
             return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
 
+    }
+    public function adminGetBookingsByUserId($id)
+    {
+            $bookings = $this->logisticBookingServices->getBookingsByUserId($id);
+            return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
     }
 }
