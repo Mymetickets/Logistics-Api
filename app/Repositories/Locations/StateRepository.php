@@ -19,7 +19,7 @@ class StateRepository implements IRepository
 
     public function findById($id)
     {
-        return State::find($id);
+        return State::findOrFail($id);
     }
 
     public function create($data)
