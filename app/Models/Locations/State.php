@@ -12,6 +12,7 @@ class State extends Model
     //
       use HasFactory, Notifiable;
      protected $fillable=[
+
         'name',
         'country_id',
         'status'
