@@ -44,8 +44,9 @@ class  UserRepository implements IRepository
         $rec = User::query()
             ->where("name", "LIKE", "%$param%")
             ->orWhere("email", "LIKE", "%$param%")
+            ->orWhere("phone_number", "LIKE", "%$param%")
             ->orWhere("status", "=", $param)
-            ->get();
+            ->paginate(pageCount());
         return $rec;
     }
 

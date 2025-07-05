@@ -41,7 +41,7 @@ return [
             'provider' => 'users',
         ],
         'admin' => [
-            'driver' => 'session',
+            'driver' => 'sanctum',
             'provider' => 'admins'
         ]
     ],
@@ -70,7 +70,7 @@ return [
         ],
 
         'admins' => [
-            'driver' => 'eloquest',
+            'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
     ],

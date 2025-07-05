@@ -20,6 +20,13 @@ class Admin extends Authenticatable
         'is_admin'
     ];
 
+    protected function casts()
+    {
+        return [
+            "password" => "hashed"
+        ];
+    }
+
     protected $hidden=[
         'password'
     ];

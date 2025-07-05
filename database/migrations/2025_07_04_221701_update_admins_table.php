@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::table("admin", function(Blueprint $table){
+        Schema::table("admins", function(Blueprint $table){
             $table->boolean("is_admin")->default(true);
             $table->timestamp("last_login")->nullable();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
     public function down(): void
     {
         //
-        Schema::dropColumns("admin", ["is_admin", "last_login"]);
+        Schema::dropColumns("admins", ["is_admin", "last_login"]);
     }
 };

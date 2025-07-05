@@ -30,12 +30,9 @@ class CustomServiceProvider extends ServiceProvider
         $this->app->bind(TransportationModeCategoryService::class, function () {
             return new TransportationModeCategoryService(new TransportationCategoryRepository);
         });
-        // $this->app->bind(TransportationModelService::class, function () {
-        //     return new TransportationModelService(
-        //         new TransportationModelRepository,
-        //         new TransportationCategoryRepository
-        //     );
-        // });
+        $this->app->bind(UserService::class, function(){
+            return new UserService(new UserRepository);
+        });
         $this->app->bind(TransportationModelService::class);
     }
 
