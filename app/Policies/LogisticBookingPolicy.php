@@ -17,14 +17,14 @@ class LogisticBookingPolicy
 
     public function viewAny(User $user){
         //allow only admin to view all bookings
-        return $user->hasRole('admin');
+    return $user->is_admin;
 
     }
 
     public function view(User $user, LogisticBooking $booking): bool
     {
     // Admins can view all bookings
-    if ($user->hasRole('admin')) {
+    if ($user->is_admin) {
         return true;
     }
 
