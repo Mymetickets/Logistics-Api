@@ -75,7 +75,7 @@ class LogisticBookingController extends Controller
             return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
 
     }
-    public function AdminGetBookingsByUserId($id)
+    public function adminGetBookingsByUserId($id)
     {
             $bookings = $this->logisticBookingServices->getBookingsByUserId($id);
             return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
