@@ -41,7 +41,6 @@ class StateRepository implements IRepository
     {
         return State::query()
             ->where("name", "LIKE", "%$param%")
-            ->orWhere("code", "LIKE", "%$param%")
             ->paginate();
     }
 }

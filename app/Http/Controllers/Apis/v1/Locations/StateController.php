@@ -8,6 +8,8 @@ use App\Services\Locations\StateService;
 use App\Class\ApiResponse;
 use App\Exceptions\FailedProcessException;
 use App\Http\Resources\Locations\StateResource;
+use App\Http\Requests\Locations\State\StateStoreRequest;
+use App\Http\Requests\Locations\State\StateUpdateRequest;
 
 class StateController extends Controller
 {
@@ -35,6 +37,27 @@ class StateController extends Controller
 
         $this->stateService->deleteState($id);
         return ApiResponse::success('State deleted successfully');
+    }
+
+    public function createState(StateStoreRequest $request)
+    {
+        $data = $request->validated();
+        $data = $this->stateService->createState($data);
+        return ApiResponse::success('State created successfully', new StateResource($data));
+    }
+
+    public function updateState(StateUpdateRequest $request, $id)
+    {
+        $data = $request->validated();
+        $data = $this->stateService->updateState($id, $data);
+        return ApiResponse::success('State updated successfully', new StateResource($data));
+    }
+
+    public function searchStates(Request $request)
+    {
+        $param = $request->input('search');
+        $data = $this->stateService->searchStates($param);
+        return ApiResponse::success('States retrieved successfully', StateResource::collection($data));
     }
 
 }
