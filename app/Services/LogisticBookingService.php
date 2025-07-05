@@ -93,7 +93,7 @@ class LogisticBookingService
         $this->authorize('viewAny', LogisticBooking::class);
 
         $data= $this->logisticBookingRepository->all();
-        if ($data->isEmpty()) {
+        if (!$data) {
             throw new FailedProcessException('No bookings found',StatusCodeEnums::FAILED);
         }
         return $data;
@@ -102,7 +102,7 @@ class LogisticBookingService
     public function searchBookings($param)
     {
         $data= $this->logisticBookingRepository->search($param);
-        if (is_null($data) || $data->isEmpty()) {
+        if (!$data) {
             throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
         }
         return $data;
@@ -112,7 +112,7 @@ class LogisticBookingService
     {
         $this->authorize('view', LogisticBooking::class);//the user will only fetch his own booking or if he is an admin
         $data= $this->logisticBookingRepository->findByUserId($userId);
-        if (is_null($data) || $data->isEmpty()) {
+        if (!$data) {
             throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);
         }
         return $data;
