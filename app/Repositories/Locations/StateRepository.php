@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Locations;
 use App\Models\Locations\State;
+use App\Repositories\IRepository;
 
 class StateRepository implements IRepository
 {

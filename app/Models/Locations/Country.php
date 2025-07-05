@@ -12,7 +12,7 @@ class Country extends Model
     //
       use HasFactory, Notifiable;
       protected $fillable=[
-        'id',
+        
         'name',
         'status'
       ];

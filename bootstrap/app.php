@@ -31,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
             registerApiRouteV1("logistic", "logisticBooking.php");
             registerApiRouteV1('Transportation','Transportation.php');
             registerApiRouteV1("users", "users.php");
+            registerApiRoutev1("locations", "locations.php");
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
