@@ -13,4 +13,8 @@ enum UserEnums
     static function tokenIdentifier($id){
         return "app_token_".$id;
     }
+
+    static function adminTokenIdentifier($id){
+        return "admin_app_token_". $id;
+    }
 }

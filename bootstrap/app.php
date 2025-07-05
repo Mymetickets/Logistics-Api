@@ -2,6 +2,7 @@
 
 use App\Class\ApiResponse;
 use App\Enums\StatusCodeEnums;
+use App\Http\Middleware\AdminAuthenticate;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -27,20 +28,27 @@ return Application::configure(basePath: dirname(__DIR__))
             ->group(base_path("routes/api.php"));
 
             registerApiRouteV1("auth", "auth.php");
+            registerApiRouteV1("logistic", "logisticBooking.php");
+            registerApiRouteV1('Transportation','Transportation.php');
+            registerApiRouteV1("users", "users.php");
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
+        $middleware->alias([
+            'auth.admin' => AdminAuthenticate::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-        $exceptions->render(function(HttpException $ex){
+        $exceptions->render(function (HttpException $ex) {
             $body = $ex->getHeaders();
             $code = $body["code"] ?? StatusCodeEnums::FAILED;
             $data = $body["data"] ?? [];
             $errors = $body["errors"] ?? [];
             return ApiResponse::custom($code, $ex->getMessage(), $data, $errors, $ex->getStatusCode() ?? 422);
         });
+
         $exceptions->render(function(ValidationException $ex){
             return ApiResponse::failed($ex->getMessage(), [], $ex->errors(), 400);
         });

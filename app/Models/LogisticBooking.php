@@ -20,5 +20,21 @@ class LogisticBooking extends Model
 
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function location()
+    {
+    return $this->belongsTo(Location::class);
+    }
+
+    public function transportMode()
+    {
+        return $this->belongsTo(TransportMode::class);
+    }
+
+    
 
 }

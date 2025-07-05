@@ -16,13 +16,13 @@ class LogisticBookingRepository implements IRepository
 
     public function all()
     {
-        $data = LogisticBooking::query()->paginate(pageCount());
+        $data = LogisticBooking::with(['user', 'location', 'transportMode'])->paginate(pageCount());
         return $data;
     }
 
     public function findById($id)
     {
-        $data = LogisticBooking::find($id);
+        $data = LogisticBooking::with(['user', 'location', 'transportMode'])->findOrFail($id);
         return $data;
     }
 
@@ -47,10 +47,18 @@ class LogisticBookingRepository implements IRepository
     public function search($param)
     {
         $rec = LogisticBooking::query()
-            ->where("good_name", "LIKE", "%$param%")
+            ->where("goods_name", "LIKE", "%$param%")
             ->orWhere("status", "=", $param)
             ->orWhere("receiver_name", "LIKE", "%$param%")
             ->get();
         return $rec;
+    }
+
+    public function findByUserId($userId)
+    {
+        $data = LogisticBooking::with(['user', 'location', 'transportMode'])
+        ->where("user_id", $userId)
+        ->paginate(pageCount());
+        return $data;
     }
 }
