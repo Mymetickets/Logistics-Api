@@ -28,7 +28,7 @@ class CountryRepository implements IRepository
         return Country::create($data);
     }
 
-    public function update($id, $data)
+    public function update($data)
     {
         return Country::where("id", $id)->update($data);
     }
