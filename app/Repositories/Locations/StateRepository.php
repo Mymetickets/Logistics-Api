@@ -15,12 +15,12 @@ class StateRepository implements IRepository
 
     public function all()
     {
-        return State::query()->paginate();
+        return State::with('country')->paginate(pageCount());
     }
 
     public function findById($id)
     {
-        return State::findOrFail($id);
+        return State::with('country')->findOrFail($id);
     }
 
     public function create($data)
