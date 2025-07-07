@@ -8,12 +8,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get("/bookings", [LogisticBookingController::class, "getAllBookings"]);
     Route::get("/bookings/user", [LogisticBookingController::class, "getBookingsByUserId"]);
     Route::get("/booking/{id}", [LogisticBookingController::class, "getBookingById"]);
-
+    Route::post("/booking-create", [LogisticBookingController::class, "createBooking"]);
     Route::post("/bookings/search", [LogisticBookingController::class, "searchBookings"]);
     Route::put("/booking-update/{id}", [LogisticBookingController::class, "updateBooking"]);
     Route::delete("/booking-delete/{id}", [LogisticBookingController::class, "deleteBooking"]);
 });
- Route::post("/booking-create", [LogisticBookingController::class, "createBooking"]);
+
 // Define routes for Admin access
 Route::middleware(["auth:sanctum", "auth.admin"])
     ->prefix('/admin/bookings')
@@ -21,6 +21,5 @@ Route::middleware(["auth:sanctum", "auth.admin"])
         Route::get("/", [LogisticBookingController::class, "getAllBookings"]);
         Route::get("/user/{id}", [LogisticBookingController::class, "adminGetBookingsByUserId"]);
         Route::get("/{id}", [LogisticBookingController::class, "getBookingById"]);
-
+        Route::patch("/{id}",[LogisticBookingController::class,"changeStatus"]);
 });
-  Route::patch("/{id}",[LogisticBookingController::class,"changeStatus"]);
