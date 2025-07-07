@@ -9,6 +9,7 @@ use App\Exceptions\FailedProcessException;
 use App\Http\Resources\LogisticBookingResource;
 use App\Http\Requests\Bookings\StoreLogisticBookingRequest;
 use App\Http\Requests\Bookings\UpdateLogisticBookingRequest;
+use App\Http\Requests\Bookings\ChangeBookingStatusRequest ;
 use App\Services\LogisticBookingService;
 
 
@@ -21,19 +22,18 @@ class LogisticBookingController extends Controller
 
     public function createBooking(StoreLogisticBookingRequest $request)
     {
-            // Validate the request data
-            $validData = $request->validated();
-            $booking = $this->logisticBookingServices->createBooking($validData);
-            return ApiResponse::success('Booking created successfully', new LogisticBookingResource($booking));
+        // Validate the request data
+        $validData = $request->validated();
+        $booking = $this->logisticBookingServices->createBooking($validData);
+        return ApiResponse::success('Booking created successfully', new LogisticBookingResource($booking));
     }
 
     public function updateBooking(UpdateLogisticBookingRequest $request, $id)
     {
 
-            $validData = $request->validated();
-            $booking = $this->logisticBookingServices->updateBooking($id, $validData);
-            return ApiResponse::success('Booking updated successfully', new LogisticBookingResource($booking));
-
+        $validData = $request->validated();
+        $booking = $this->logisticBookingServices->updateBooking($id, $validData);
+        return ApiResponse::success('Booking updated successfully', new LogisticBookingResource($booking));
     }
 
     public function getBookingById($id)
@@ -44,37 +44,43 @@ class LogisticBookingController extends Controller
 
     public function deleteBooking($id)
     {
-            $deleted = $this->logisticBookingServices->deleteBooking($id);
-            return ApiResponse::success('Booking deleted successfully');
+        $deleted = $this->logisticBookingServices->deleteBooking($id);
+        return ApiResponse::success('Booking deleted successfully');
     }
 
     public function getAllBookings()
     {
 
-            $bookings = $this->logisticBookingServices->getAllBookings();
-            return ApiResponse::success('Bookings retrieved successfully', LogisticBookingResource::collection($bookings));
-
+        $bookings = $this->logisticBookingServices->getAllBookings();
+        return ApiResponse::success('Bookings retrieved successfully', LogisticBookingResource::collection($bookings));
     }
 
     public function searchBookings(Request $request)
     {
 
-            $param = $request->input('search');
-            $bookings = $this->logisticBookingServices->searchBookings($param);
-            return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
-
+        $param = $request->input('search');
+        $bookings = $this->logisticBookingServices->searchBookings($param);
+        return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
     }
 
     public function getBookingsByUserId()
     {
-            $userId = auth()->user()->id;
-            $bookings = $this->logisticBookingServices->getBookingsByUserId($userId);
-            return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
-
+        $userId = auth()->user()->id;
+        $bookings = $this->logisticBookingServices->getBookingsByUserId($userId);
+        return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
     }
     public function adminGetBookingsByUserId($id)
     {
-            $bookings = $this->logisticBookingServices->getBookingsByUserId($id);
-            return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
+        $bookings = $this->logisticBookingServices->getBookingsByUserId($id);
+        return ApiResponse::success('Bookings found', LogisticBookingResource::collection($bookings));
+    }
+
+    public function changeStatus(ChangeBookingStatusRequest $request, $id)
+    {
+        $status = $request->validated()['status']; // Get only the validated status
+
+        $booking = $this->logisticBookingServices->changeStatus($id, $status);
+
+        return ApiResponse::success("Booking status changed to {$status}", new LogisticBookingResource($booking));
     }
 }

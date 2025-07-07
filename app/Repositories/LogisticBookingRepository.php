@@ -61,4 +61,12 @@ class LogisticBookingRepository implements IRepository
         ->paginate(pageCount());
         return $data;
     }
+    public function updateStatus($id, $status)
+    {
+        $booking = LogisticBooking::findOrFail($id);
+        $booking->status = $status;
+        $booking->save();
+
+        return $booking;
+    }
 }
