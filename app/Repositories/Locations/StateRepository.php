@@ -30,7 +30,9 @@ class StateRepository implements IRepository
 
     public function update($id, $data)
     {
-        return State::where("id", $id)->update($data);
+        $record= State::findOrFail($id);
+     $record->update($data);//updated the field and return the model instance
+     return $record;
     }
 
     public function delete($id)
