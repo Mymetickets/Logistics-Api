@@ -30,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
             registerApiRouteV1("auth", "auth.php");
             registerApiRouteV1("logistic", "logisticBooking.php");
             registerApiRouteV1('Transportation','Transportation.php');
+            registerApiRouteV1("location", "location.php");
             registerApiRouteV1("users", "users.php");
         }
     )

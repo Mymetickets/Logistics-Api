@@ -5,16 +5,20 @@ namespace App\Models\Locations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class State extends Model
 {
-    //
-      use HasFactory, Notifiable;
-     protected $fillable=[
+    use HasFactory, Notifiable;
+
+    protected $fillable = [
         'name',
         'country_id',
         'status'
-     ];
+    ];
 
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
 }
