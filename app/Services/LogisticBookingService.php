@@ -116,11 +116,11 @@ class LogisticBookingService
 
         $data= $this->logisticBookingRepository->findByUserId($userId);
         //$data is a collection but Gate works for single data which is why i used first().
-
-        Gate::authorize('view', $data->first());//the user will only fetch his own booking or if he is an admin
-        if (!$data) {
+        if ($data->isEmpty()) {
             throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);
         }
+        Gate::authorize('view', $data->first());//the user will only fetch his own booking or if he is an admin
+
         return $data;
     }
 

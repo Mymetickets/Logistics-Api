@@ -22,15 +22,18 @@ class LogisticBookingPolicy
 
     }
 
-    public function view(User $user, LogisticBooking $booking): bool
+    public function view($auth, LogisticBooking $booking): bool
     {
     // Admins can view all bookings
-    if ($user->is_admin) {
+    if ($auth instanceof \App\Models\Admin && $auth->is_admin) {
         return true;
     }
 
     // Regular users can only view their own bookings
-    return $booking->user_id === $user->id;
+    if($auth instanceof \App\Models\User){
+        return $booking->user_id === $auth->id;
+    }
+
 }
 
 
