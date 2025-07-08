@@ -10,5 +10,5 @@ enum LogisticBookingEnums
     const SHIPPED = 'shipped';
     const ARRIVED = 'arrived';
     const DELIVERED = 'delivered';
-    const CANCEL = 'cancelled';
+    const CANCELLED = 'cancelled';
 }

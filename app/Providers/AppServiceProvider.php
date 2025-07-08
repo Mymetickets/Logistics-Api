@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Providers;
+use App\Models\LogisticBooking;
+use App\Policies\LogisticBookingPolicy;
+use Illuminate\Support\Facades\Gate;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -11,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        
+
     }
 
     /**
@@ -19,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::policy(LogisticBooking::class, LogisticBookingPolicy::class);
+
     }
 }
