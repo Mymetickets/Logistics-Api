@@ -34,8 +34,9 @@ class LogisticBookingRepository implements IRepository
 
     public function update($id, $data)
     {
-        $rec = LogisticBooking::where("id", $id)->update($data);
-        return $rec;
+        $record= State::findOrFail($id);
+     $record->update($data);//updated the field and return the model instance
+     return $record;
     }
 
     public function delete($id)

@@ -25,6 +25,7 @@ class LogisticBookingService
 
     public function createBooking(array $data)
     {
+        $data['user_id'] = auth()->user()->id;
         $data= $this->logisticBookingRepository->create($data);
         if (!$data) {
             throw new FailedProcessException('Booking creation failed',StatusCodeEnums::FAILED);
