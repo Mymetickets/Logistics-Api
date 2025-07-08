@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use App\Models\Locations\Location;
+use App\Models\Transportations\TransportMode;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,6 +37,6 @@ class LogisticBooking extends Model
         return $this->belongsTo(TransportMode::class);
     }
 
-    
+
 
 }
