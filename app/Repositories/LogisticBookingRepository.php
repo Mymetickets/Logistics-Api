@@ -34,13 +34,8 @@ class LogisticBookingRepository implements IRepository
 
     public function update($id, $data)
     {
-        $booking = $this->findById($id);//the find by id method
-
-        if (!$booking) {
-            return null;
-        }
-        $booking->update($data);
-        return $booking->fresh();
+        $rec = LogisticBooking::where("id", $id)->update($data);
+        return $rec;
     }
 
     public function delete($id)
