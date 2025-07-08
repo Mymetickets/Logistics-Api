@@ -93,7 +93,7 @@ class LogisticBookingService
     public function getAllBookings()
     {
         // Check if the user has permission to view all bookings
-        $this->authorize('viewAny', LogisticBooking::class);
+        Gate::authorize('viewAny', LogisticBooking::class);
 
         $data= $this->logisticBookingRepository->all();
         if (!$data) {

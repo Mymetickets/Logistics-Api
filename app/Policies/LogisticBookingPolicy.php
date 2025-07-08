@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\LogisticBooking;
 
 class LogisticBookingPolicy
@@ -15,9 +16,9 @@ class LogisticBookingPolicy
         //
     }
 
-    public function viewAny(User $user){
+    public function viewAny(Admin $admin){
         //allow only admin to view all bookings
-    return $user->is_admin;
+    return $admin->is_admin;
 
     }
 
