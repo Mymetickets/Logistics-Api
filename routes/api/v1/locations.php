@@ -28,12 +28,4 @@ Route::put('/location/update/{id}',[LocationController::class, 'updateLocation']
 Route::delete('/location/delete/{id}',[LocationController::class, 'deleteLocation']);
 
 
-
-
-
-
-
-
-
-
 ?>
