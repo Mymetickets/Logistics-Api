@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Notifications\BookingStatusChanged;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Gate;
 
 
 class LogisticBookingService
@@ -64,8 +65,9 @@ class LogisticBookingService
 
     public function getBookingById($id)
     {
-        $this->authorize('view', LogisticBooking::class);//the user will only fetch his own booking or if he is an admin
+        //$this->authorize('view', LogisticBooking::class);//the user will only fetch his own booking or if he is an admin
         $data= $this->logisticBookingRepository->findById($id);
+        Gate::authorize('view', $data);
         if (!$data) {
             throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
         }
@@ -76,7 +78,7 @@ class LogisticBookingService
     {
         //checking if ID is valid
         $booking = $this->logisticBookingRepository->findById($id);
-
+        Gate::authorize('view', $booking);
         if (!$booking) {
           throw new FailedProcessException('Booking not found',StatusCodeEnums::FAILED);
         }
@@ -111,8 +113,11 @@ class LogisticBookingService
 
     public function getBookingsByUserId($userId)
     {
-        $this->authorize('view', LogisticBooking::class);//the user will only fetch his own booking or if he is an admin
+
         $data= $this->logisticBookingRepository->findByUserId($userId);
+        //$data is a collection but Gate works for single data which is why i used first().
+
+        Gate::authorize('view', $data->first());//the user will only fetch his own booking or if he is an admin
         if (!$data) {
             throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);
         }
