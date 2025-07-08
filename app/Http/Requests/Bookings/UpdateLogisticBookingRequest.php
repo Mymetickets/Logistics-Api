@@ -30,7 +30,7 @@ class UpdateLogisticBookingRequest extends FormRequest
             'receiver_email'    => 'sometimes|required|email|max:255',
             'receiver_phone'    => 'sometimes|required|string|max:20',
             'receiver_address'  => 'sometimes|required|string|max:500',
-            'status' => 'sometimes|required|in:' . LogisticBookingEnums::CANCEL,
+            'status' => 'required|in:' . LogisticBookingEnums::CANCELLED,
 
         ];
     }

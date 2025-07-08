@@ -11,7 +11,7 @@ class BookingStatusChanged extends Notification
 {
     use Queueable;
 
-    protected $id;
+    public $id;
     protected $status;
 
     public function __construct($id,$status)
