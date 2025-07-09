@@ -11,7 +11,7 @@ class StateUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,9 +22,7 @@ class StateUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "sometimes|required|string",
-            'country_id'=> 'sometimes|required|exists:countries,id',
-            'status' => 'sometimes|required|boolean',
+            //
         ];
     }
 }

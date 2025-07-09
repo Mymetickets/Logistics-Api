@@ -15,12 +15,12 @@ class StateRepository implements IRepository
 
     public function all()
     {
-        return State::query()->paginate();
+        return State::with('country')->paginate(pageCount());
     }
 
     public function findById($id)
     {
-        return State::findOrFail($id);
+        return State::with('country')->findOrFail($id);
     }
 
     public function create($data)
@@ -30,9 +30,7 @@ class StateRepository implements IRepository
 
     public function update($id, $data)
     {
-        $record= State::findOrFail($id);
-     $record->update($data);//updated the field and return the model instance
-     return $record;
+        return State::where("id", $id)->update($data);
     }
 
     public function delete($id)

@@ -5,7 +5,7 @@ namespace App\Http\Resources\Locations;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LocationResource extends JsonResource
+class CountryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +15,11 @@ class LocationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id"=>$this->id,
-            "city"=> $this->city,
-            "state_id"=>$this->state_id,
-            "country_id"=>$this->country_id,
-            "status"=>$this->status,
-            "created_at"=>$this->created_at,
-            "updated_at"=>$this->updated_at,
+            'id' => $this->id,
+            'name' => $this->name,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

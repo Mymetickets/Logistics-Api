@@ -5,8 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserResource;
-use App\Http\Resources\Locations\LocationResource;
-use App\Http\Resources\Transportations\TransportationModeResource;
+use App\Http\Resources\LocationResource;
+use App\Http\Resources\TransportModeResource;
 
 
 class LogisticBookingResource extends JsonResource
@@ -26,7 +26,7 @@ class LogisticBookingResource extends JsonResource
             'location_id' => $this->location_id,
             'location'       => new LocationResource($this->whenLoaded('location')),
             'transport_mode_id' => $this->transport_mode_id,
-            'transport_mode' => new TransportationModeResource($this->whenLoaded('transportMode')),
+            'transport_mode' => new TransportModeResource($this->whenLoaded('transportMode')),
             'goods_name' => $this->goods_name,
             'weight' => $this->weight,
             'receiver_name' => $this->receiver_name,

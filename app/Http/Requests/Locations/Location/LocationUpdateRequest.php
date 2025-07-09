@@ -6,23 +6,20 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LocationUpdateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
-        return [
-            //
-        ];
-    }
+       return [
+        'city' => ['sometimes', 'string', 'max:255', 'unique:locations,city,' . $this->route('location')],
+        'country_id' => ['sometimes', 'integer', 'exists:countries,id'],
+        'state_id' => ['sometimes', 'integer', 'exists:states,id'],
+        'status' => ['sometimes', 'boolean'],
+       ];
+}
+
 }

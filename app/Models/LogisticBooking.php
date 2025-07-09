@@ -3,9 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\Locations\Location;
-use App\Models\Transportations\TransportMode;
 
 class LogisticBooking extends Model
 {
@@ -38,6 +35,6 @@ class LogisticBooking extends Model
         return $this->belongsTo(TransportMode::class);
     }
 
-
+    
 
 }
