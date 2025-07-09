@@ -99,7 +99,8 @@ class LogisticBookingService
     public function getAllBookings()
     {
         $auth = currentAuthUser();
-        Gate::forUser($auth)->inspect(LogisticBooking::class);
+        //dd($auth);
+        Gate::forUser($auth)->authorize('viewAny',LogisticBooking::class);
 
         $data= $this->logisticBookingRepository->all();
         if (!$data) {

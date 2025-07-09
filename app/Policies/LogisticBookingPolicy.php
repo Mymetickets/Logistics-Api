@@ -15,9 +15,12 @@ class LogisticBookingPolicy
         //
     }
 
-    public function viewAny(Admin $admin): bool
+    public function viewAny($auth): bool
     {
-	    return $admin->is_admin;
+        if ($auth instanceof Admin){
+	    return true;
+        }
+        return false;
     }
 
 
