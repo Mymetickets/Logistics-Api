@@ -10,6 +10,7 @@ use App\Exceptions\FailedProcessException;
 use App\Http\Resources\Locations\LocationResource;
 use App\Http\Requests\Locations\Location\LocationStoreRequest;
 use App\Http\Requests\Locations\Location\LocationUpdateRequest;
+use App\Models\Admin;
 
 class LocationController extends Controller
 {
@@ -44,13 +45,23 @@ class LocationController extends Controller
         $data = $request->validated();
         $data = $this->locationService->createLocation($data);
         return ApiResponse::success('Location created successfully', new LocationResource($data));
-    }
+    } 
 
     public function updateLocation(LocationUpdateRequest $request, $id)
     {
-        $data = $request->validated();
-        $data = $this->locationService->updateLocation($id, $data);
-        return ApiResponse::success('Location updated successfully', new LocationResource($data));
+        // Getting the authenticated user from the 'admin' guard in config/auth
+        $admin = auth('admin')->user();
+
+        if (!$admin || !$admin->is_admin) {
+            return ApiResponse::error('Unauthorized. Only administrators with admin privileges can update location availability.', 403);
+        }
+      
+        $location = $this->locationService->updateLocation($id, $request->validated());
+        if (!$location) {
+            return ApiResponse::error('Location not found or could not be updated.', 404);
+        }
+        return ApiResponse::success($location, 'Location updated successfully.');
+    
     }
 
     public function searchLocations(Request $request)
