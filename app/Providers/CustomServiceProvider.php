@@ -34,6 +34,24 @@ class CustomServiceProvider extends ServiceProvider
             return new UserService(new UserRepository);
         });
         $this->app->bind(TransportationModelService::class);
+        $this->app->bind(CountryRepository::class, function ($app) {
+            return new CountryRepository($app->make(\App\Models\Locations\Country::class));
+        });
+        $this->app->bind(CountryService::class, function ($app) {
+            return new CountryService($app->make(CountryRepository::class));
+        });
+        $this->app->bind(StateRepository::class, function ($app) {
+            return new StateRepository($app->make(\App\Models\Locations\State::class));
+        });
+        $this->app->bind(StateService::class, function ($app) {
+            return new StateService($app->make(StateRepository::class));
+        });
+        $this->app->bind(LocationRepository::class, function ($app) {
+            return new LocationRepository($app->make(\App\Models\Locations\Location::class));
+        });
+        $this->app->bind(LocationService::class, function ($app) {
+            return new LocationService($app->make(LocationRepository::class));
+        });
     }
 
     /**

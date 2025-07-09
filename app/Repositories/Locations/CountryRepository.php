@@ -5,9 +5,7 @@ use App\Repositories\IRepository;
 
 class CountryRepository implements IRepository
 {
-    /**
-     * Create a new class instance.
-     */
+
     public function __construct()
     {
         //
