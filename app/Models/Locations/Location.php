@@ -5,12 +5,13 @@ use App\Models\Locations\State;
 use App\Models\Locations\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Location extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'locations'; 
+    protected $table = 'locations';
     protected $fillable = [
         'city',
         'state_id',

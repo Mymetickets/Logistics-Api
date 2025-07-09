@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Policies;
-
+use App\Models\Admin;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\LogisticBooking;
@@ -16,25 +16,30 @@ class LogisticBookingPolicy
         //
     }
 
-    public function viewAny(Admin $admin){
-        //allow only admin to view all bookings
-    return $admin->is_admin;
-
+    public function viewAny($auth): bool
+    {
+        if ($auth instanceof Admin){
+	    return true;
+        }
+        return false;
     }
+
 
     public function view($auth, LogisticBooking $booking): bool
     {
     // Admins can view all bookings
-    if ($auth instanceof \App\Models\Admin && $auth->is_admin) {
+        if ($auth instanceof Admin && $auth->is_admin) {
         return true;
     }
 
-    // Regular users can only view their own bookings
-    if($auth instanceof \App\Models\User){
-        return $booking->user_id === $auth->id;
+         if ($auth instanceof User) {
+            return $booking->user_id === $auth->id;
+        }
+
+        return false;
     }
 
 }
 
 
-}
+

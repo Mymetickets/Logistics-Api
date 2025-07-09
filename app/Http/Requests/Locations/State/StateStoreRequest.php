@@ -23,6 +23,7 @@ class StateStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'country_id'=> 'required|exists:countries,id',
             'status' => 'required|boolean',
         ];
     }
