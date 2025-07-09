@@ -39,7 +39,7 @@ class LogisticBookingController extends Controller
     public function getBookingById($id)
     {
         $booking = $this->logisticBookingServices->getBookingById($id);
-        return ApiResponse::success('User found', new LogisticBookingResource($booking));
+        return ApiResponse::success('Booking found', new LogisticBookingResource($booking));
     }
 
     public function deleteBooking($id)
