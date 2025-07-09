@@ -44,8 +44,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         //
         $exceptions->render(function (HttpException $ex) {
-            if ($ex->getStatusCode() === 404 && $ex->getPrevious() instanceof ModelNotFoundException) {
-                return ApiResponse::failed('Resource not found', [], [], 404);
+            if ($ex->getStatusCode() === 404 ) {
+                if($ex->getPrevious() instanceof ModelNotFoundException){
+                    return ApiResponse::failed('Resource not found', [], [], 422);
+                }
             }
             $body = $ex->getHeaders();
             $code = $body["code"] ?? StatusCodeEnums::FAILED;
