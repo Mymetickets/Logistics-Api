@@ -90,7 +90,7 @@ class LogisticBookingService
     public function getAllBookings()
     {
         // Check if the user has permission to view all bookings
-        $this->authorize('viewAny', LogisticBooking::class);
+        Gate::authorize('viewAny', LogisticBooking::class);
 
         $data= $this->logisticBookingRepository->all();
         if (!$data) {
@@ -115,6 +115,8 @@ class LogisticBookingService
         if (!$data) {
             throw new FailedProcessException('Booking not found for this user',StatusCodeEnums::FAILED);
         }
+        Gate::authorize('view', $data->first());//the user will only fetch his own booking or if he is an admin
+
         return $data;
     }
 
