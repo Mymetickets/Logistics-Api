@@ -21,5 +21,6 @@ Route::middleware(["auth:sanctum", "auth.admin"])
         Route::get("/", [LogisticBookingController::class, "getAllBookings"]);
         Route::get("/user/{id}", [LogisticBookingController::class, "adminGetBookingsByUserId"]);
         Route::get("/{id}", [LogisticBookingController::class, "getBookingById"]);
-        Route::patch("/{id}",[LogisticBookingController::class,"changeStatus"]);
+
 });
+   Route::patch("/{id}",[LogisticBookingController::class,"changeStatus"]);

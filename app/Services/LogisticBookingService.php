@@ -28,7 +28,7 @@ class LogisticBookingService
     public function createBooking(array $data)
     {
         $data['user_id'] = auth()->user()->id;
-        $data= $this->logisticBookingRepository->create($data);
+        $data = $this->logisticBookingRepository->create($data);
         if (!$data) {
             throw new FailedProcessException('Booking creation failed', StatusCodeEnums::FAILED);
         }
@@ -45,18 +45,16 @@ class LogisticBookingService
 
         if ($booking->status !== LogisticBookingEnums::DRAFT) {
 
-        throw new FailedProcessException('Only bookings in draft status can be updated',StatusCodeEnums::FAILED);
-
-
-    }
+            throw new FailedProcessException('Only bookings in draft status can be updated', StatusCodeEnums::FAILED);
+        }
         $auth = currentAuthUser();
         Gate::forUser($auth)->authorize('view', $booking);
-       $updatedBooking= $this->logisticBookingRepository->update($id, $data);
+        $updatedBooking = $this->logisticBookingRepository->update($id, $data);
 
-    if (!$updatedBooking) {
+        if (!$updatedBooking) {
 
-        throw new FailedProcessException('Booking update failed',StatusCodeEnums::FAILED);
-    }
+            throw new FailedProcessException('Booking update failed', StatusCodeEnums::FAILED);
+        }
 
         // Notify the user about the booking status change
         $user = User::find($booking->user_id);
@@ -70,7 +68,7 @@ class LogisticBookingService
     public function getBookingById($id)
     {
         $auth = currentAuthUser();
-        $data= $this->logisticBookingRepository->findById($id);
+        $data = $this->logisticBookingRepository->findById($id);
         Gate::forUser($auth)->authorize('view', $data);
 
         if (!$data) {
@@ -101,7 +99,7 @@ class LogisticBookingService
     {
         $auth = currentAuthUser();
         //dd($auth);
-        Gate::forUser($auth)->authorize('viewAny',LogisticBooking::class);
+        Gate::forUser($auth)->authorize('viewAny', LogisticBooking::class);
 
         $data = $this->logisticBookingRepository->all();
         if (!$data) {
@@ -122,16 +120,22 @@ class LogisticBookingService
     public function getBookingsByUserId($userId)
     {
         $auth = currentAuthUser();
-        $data= $this->logisticBookingRepository->findByUserId($userId);
+        $data = $this->logisticBookingRepository->findByUserId($userId);
         if (!$data) {
             throw new FailedProcessException('Booking not found for this user', StatusCodeEnums::FAILED);
         }
-        Gate::forUser($auth)->authorize('view', $data->first());//the user will only fetch his own booking or if he is an admin
+        Gate::forUser($auth)->authorize('view', $data->first()); //the user will only fetch his own booking or if he is an admin
 
         return $data;
     }
-     public function changeStatus($id, $status)
+    public function changeStatus($id, $status)
     {
-        return $this->logisticBookingRepository->updateStatus($id, $status);
+        $data = $this->logisticBookingRepository->findById($id);
+
+        if ($data['status'] != LogisticBookingEnums::DRAFT) {
+            return $this->logisticBookingRepository->updateStatus($id, $status);
+        }
+
+        throw new FailedProcessException('Booking is still in user draft', StatusCodeEnums::FAILED);
     }
 }

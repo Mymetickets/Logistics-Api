@@ -78,9 +78,7 @@ class LogisticBookingController extends Controller
     public function changeStatus(ChangeBookingStatusRequest $request, $id)
     {
         $status = $request->validated()['status']; // Get only the validated status
-
         $booking = $this->logisticBookingServices->changeStatus($id, $status);
-
         return ApiResponse::success("Booking status changed to {$status}", new LogisticBookingResource($booking));
     }
 }
