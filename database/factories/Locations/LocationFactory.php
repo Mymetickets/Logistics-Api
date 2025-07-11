@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Locations;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Locations\State;
@@ -22,9 +22,9 @@ class LocationFactory extends Factory
     {
         return [
             'city'        => fake()->city,
-            'country_id'  => Country::factory(), // or manually set an ID
-            'state_id'    => State::factory(),   // or manually set an ID
-            'status'      => fake()->boolean() ? 'active' : 'inactive', // example statuses
+            'country_id'  => Country::factory(),
+            'state_id'    => State::factory(),   
+            'status'      => fake()->boolean() ? 1 : 0,
         ];
     }
 }

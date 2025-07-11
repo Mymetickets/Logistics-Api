@@ -1,9 +1,10 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Transportations;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Transportaions\TransportMode;
+use App\Models\Transportations\TransportMode;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TransportMode>

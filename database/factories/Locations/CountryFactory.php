@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Locations;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Locations\Country;
@@ -20,7 +20,7 @@ class CountryFactory extends Factory
     {
         return [
             "name"=> fake()->name(),
-            'status' => fake()->boolean() ? 'true' : 'false',
+            'status' => fake()->boolean() ? 1 : 0,
         ];
     }
 }

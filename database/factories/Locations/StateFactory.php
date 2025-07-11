@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Locations;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Locations\State;
@@ -21,7 +21,7 @@ class StateFactory extends Factory
         return [
             "name"=>fake()->name(),
             "country_id"=>Country::factory(),
-            "status" => fake()->boolean() ? 'true' : 'false',
+            "status" => fake()->boolean() ? 1 : 0,
 
         ];
     }

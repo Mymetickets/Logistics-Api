@@ -7,6 +7,9 @@ use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Locations\Location;
+use App\Models\Transportations\TransportMode;
+use App\Enums\LogisticBookingEnums;
 
 class LogisticBookingTest extends TestCase
 {
