@@ -9,7 +9,8 @@ use App\Exceptions\FailedProcessException;
 use App\Http\Resources\LogisticBookingResource;
 use App\Http\Requests\Bookings\StoreLogisticBookingRequest;
 use App\Http\Requests\Bookings\UpdateLogisticBookingRequest;
-use App\Http\Requests\Bookings\ChangeBookingStatusRequest ;
+use App\Http\Requests\Bookings\ChangeBookingStatusRequest;
+use App\Http\Requests\Bookings\FilterBookingStatusRequest;
 use App\Services\LogisticBookingService;
 
 
@@ -48,10 +49,13 @@ class LogisticBookingController extends Controller
         return ApiResponse::success('Booking deleted successfully');
     }
 
-    public function getAllBookings()
+    public function getAllBookings(FilterBookingStatusRequest $request)
     {
 
-        $bookings = $this->logisticBookingServices->getAllBookings();
+        $status = $request->validated()['status'] ?? null;
+
+        $bookings = $this->logisticBookingServices->getAllBookings($status);
+
         return ApiResponse::success('Bookings retrieved successfully', LogisticBookingResource::collection($bookings));
     }
 

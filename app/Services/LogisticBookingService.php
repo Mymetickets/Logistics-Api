@@ -24,7 +24,6 @@ class LogisticBookingService
     {
         $this->logisticBookingRepository = $logisticBookingRepository;
     }
-
     public function createBooking(array $data)
     {
         $data['user_id'] = auth()->user()->id;
@@ -34,7 +33,6 @@ class LogisticBookingService
         }
         return $data;
     }
-
     public function updateBooking($id, array $data)
     {
         $booking = $this->logisticBookingRepository->findById($id);
@@ -64,7 +62,6 @@ class LogisticBookingService
 
         return $updatedBooking;
     }
-
     public function getBookingById($id)
     {
         $auth = currentAuthUser();
@@ -76,7 +73,6 @@ class LogisticBookingService
         }
         return $data;
     }
-
     public function deleteBooking($id)
     {
         $auth = currentAuthUser();
@@ -95,18 +91,15 @@ class LogisticBookingService
         return $data;
     }
 
-    public function getAllBookings()
+    public function getAllBookings(?string $status = null)
     {
-        $auth = currentAuthUser();
-        //dd($auth);
-        Gate::forUser($auth)->authorize('viewAny', LogisticBooking::class);
-
-        $data = $this->logisticBookingRepository->all();
-        if (!$data) {
-            throw new FailedProcessException('No bookings found', StatusCodeEnums::FAILED);
-        }
+        $user = currentAuthUser();
+        $data = $this->logisticBookingRepository->adminAll($status);
+        throw_if($data->isEmpty(), new FailedProcessException('No bookings found', StatusCodeEnums::FAILED));
         return $data;
     }
+
+
 
     public function searchBookings($param)
     {
@@ -116,7 +109,6 @@ class LogisticBookingService
         }
         return $data;
     }
-
     public function getBookingsByUserId($userId)
     {
         $auth = currentAuthUser();

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
-
+namespace App\Http\Requests\Bookings;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Enums\LogisticBookingEnums;
 
-class ChangeBookingStatusRequest extends FormRequest
+class FilterBookingStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +22,11 @@ class ChangeBookingStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', 'in:' . implode(',', LogisticBookingEnums::values())],
+            'status' => ['nullable', 'in:' . implode(',', LogisticBookingEnums::values())],
         ];
+    }
+    public function status(): ?string
+    {
+        return $this->query('status'); // safely fetch ?status= from query string
     }
 }
