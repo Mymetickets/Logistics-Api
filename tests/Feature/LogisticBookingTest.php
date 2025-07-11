@@ -24,4 +24,37 @@ class LogisticBookingTest extends TestCase
         $response->assertStatus(403);
         $response->assertSeeText('This action is unauthorized');
     }
+
+    public function test_user_can_create_logistic_booking()
+    {
+        // Create user and authenticate
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // Create dependencies
+        $location = Location::factory()->create();
+        $transportMode = TransportMode::factory()->create();
+
+        // Send POST request
+        $response = $this->post('api/v1/logistic/booking-create', [
+            'location_id' => $location->id,
+            'transport_mode_id' => $transportMode->id,
+            'goods_name' => 'Frozen Fish',
+            'weight' => 5.25,
+            'receiver_name' => 'Amaka Olarewaju',
+            'receiver_email' => 'amaka@gmail.com',
+            'receiver_phone' => '08012345678',
+            'receiver_address' => '12 Market Street, Lagos',
+            'status' => LogisticBookingEnums::DRAFT,
+        ]);
+
+        // Assert status and DB
+        $response->assertStatus(200); // or 201 depending on your controller
+        $this->assertDatabaseHas('logistic_bookings', [
+            'goods_name' => 'Frozen Fish',
+            'receiver_email' => 'amaka@gmail.com',
+        ]);
+        $response->assertSeeText('Booking created successfully');
+    }
+    //
 }
