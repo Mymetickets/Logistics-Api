@@ -17,7 +17,7 @@ class LogisticBookingTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_user_get_cannot_get_bookings(): void
+    public function test_user_cannot_get_bookings(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user, ['*']);

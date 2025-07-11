@@ -2,17 +2,15 @@
 
 namespace Database\Factories\Transportations;
 
-
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Transportations\TransportMode;
 use App\Models\Transportations\TransportationModeCategory;
-
+use Illuminate\Support\Str;
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TransportMode>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TransportModeCategory>
  */
-class TransportModeFactory extends Factory
+class TransportationModeCategoryFactory extends Factory
 {
-    protected $model = TransportMode::class;
+    protected $model = TransportationModeCategory::class;
     /**
      * Define the model's default state.
      *
@@ -20,13 +18,15 @@ class TransportModeFactory extends Factory
      */
     public function definition(): array
     {
+
         $name = $this->faker->unique()->word();
 
         return [
             'name'        => $name,
-            'category_id' => TransportationModeCategory::factory(),
+            'slug'        => Str::slug($name),
             'description' => $this->faker->sentence(),
-
+            'status' => fake()->boolean() ? 1 : 0,
         ];
+
     }
 }
