@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\LogisticBookingEnums;
 use App\Models\LogisticBooking;
 
 class LogisticBookingRepository implements IRepository
@@ -14,10 +15,15 @@ class LogisticBookingRepository implements IRepository
         //
     }
 
-    public function all()
+    public function all(?string $status = null)
     {
-        $data = LogisticBooking::with(['user', 'location', 'transportMode'])->paginate(pageCount());
-        return $data;
+       $query = LogisticBooking::with(['user', 'location', 'transportMode']);
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        return $query->paginate(pageCount());
     }
 
     public function findById($id)
@@ -34,9 +40,9 @@ class LogisticBookingRepository implements IRepository
 
     public function update($id, $data)
     {
-        $record= State::findOrFail($id);
-     $record->update($data);//updated the field and return the model instance
-     return $record;
+        $record = LogisticBooking::findOrFail($id);
+        $record->update($data); //updated the field and return the model instance
+        return $record;
     }
 
     public function delete($id)
@@ -58,8 +64,26 @@ class LogisticBookingRepository implements IRepository
     public function findByUserId($userId)
     {
         $data = LogisticBooking::with(['user', 'location', 'transportMode'])
-        ->where("user_id", $userId)
-        ->paginate(pageCount());
+            ->where("user_id", $userId)
+            ->paginate(pageCount());
         return $data;
+    }
+    public function updateStatus($id, $status)
+    {
+        $booking = LogisticBooking::findOrFail($id);
+        $booking->status = $status;
+        $booking->save();
+
+        return $booking;
+    }
+    public function adminAll(?string $status = null)
+    {
+        $query = LogisticBooking::with(['user', 'location', 'transportMode']);
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        return $query->paginate(pageCount());
     }
 }
