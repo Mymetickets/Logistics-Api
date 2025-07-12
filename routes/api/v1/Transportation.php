@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Apis\v1\Transportation\TransportationModeCategoryController;
 use App\Http\Controllers\Apis\v1\Transportation\TransportationModelController;
+use App\Http\Controllers\Apis\v1\Transportation\TransportModeController;
 
 Route::prefix('/TransportationModeCategory')->group(function () {
     Route::get('/', [TransportationModeCategoryController::class, "index"]);
@@ -19,3 +20,7 @@ Route::prefix('/TransportationModel')->group(function () {
     Route::put('/update/{id}', [TransportationModelController::class, "update"]);
     Route::delete('/delete/{id}', [TransportationModelController::class, 'delete']);
 });
+
+//Route for Admin to update transportation mode
+Route::put('/modes/update/{id}', [TransportModeController::class, 'updateTransportationMode'])
+    ->middleware('auth:admin');

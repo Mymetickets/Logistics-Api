@@ -13,7 +13,7 @@ class TransportMode extends Model
 
         'name',
         'category_id',
-        'description_id',
+        'description',
         'status',
     ];
     public function category()
