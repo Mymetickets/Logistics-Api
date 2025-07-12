@@ -40,18 +40,11 @@ class LocationService
 
     public function updateLocation($id, $data)
     {
-        $Location = $this->locationRepository->findById($id);
-
-        if (!$Location) {
-            throw new FailedProcessException('Location not found', StatusCodeEnums::FAILED);
+        $location = $this->locationRepository->findById($id);
+        if (!$location) {
+            return null; 
         }
-        $data= $this->locationRepository->update($id, $data);
-
-        if (!$data){
-            throw new FailedProcessException('Location Update failed', StatusCodeEnums::FAILED);
-        }
-        return $data;
-
+        return $this->locationRepository->update($id, $data);
     }
 
     public function deleteLocation($id)

@@ -24,7 +24,7 @@ Route::get('/countries/search',[CountryController::class, 'searchCountries']);
 Route::get('/locations',[LocationController::class, 'getAllLocations']);
 Route::get('/location/{id}',[LocationController::class, 'getLocationById']);
 Route::post('/location/create',[LocationController::class, 'createLocation']);
-Route::put('/location/update/{id}',[LocationController::class, 'updateLocation']);
+Route::put('/location/update/{id}',[LocationController::class, 'updateLocation'])->middleware('auth:admin');
 Route::delete('/location/delete/{id}',[LocationController::class, 'deleteLocation']);
 
 
