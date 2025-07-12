@@ -11,10 +11,12 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+if (!function_exists('registerApiRouteV1')) {
 function registerApiRouteV1($prefix, $file_name){
     return Route::middleware("api")
     ->prefix("api/v1/$prefix")
     ->group(base_path("routes/api/v1/$file_name"));
+}
 }
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
