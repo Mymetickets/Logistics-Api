@@ -28,10 +28,17 @@ class StateRepository implements IRepository
         return State::create($data);
     }
 
-    public function update($id, $data)
+   public function update($id, $data)
     {
-        return State::where("id", $id)->update($data);
+        $state = $this->findById($id);
+
+        if ($state) {
+            $state->update($data);
+            return $state; // Return the updated state object
+        }
+        return null;
     }
+
 
     public function delete($id)
     {

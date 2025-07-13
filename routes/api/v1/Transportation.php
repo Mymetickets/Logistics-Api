@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Apis\v1\Transportation\TransportationModeCategoryController;
 use App\Http\Controllers\Apis\v1\Transportation\TransportationModelController;
+use App\Http\Controllers\Apis\v1\Transportation\TransportModeController;
 
 Route::prefix('/TransportationModeCategory')->group(function () {
     Route::get('/', [TransportationModeCategoryController::class, "index"]);
@@ -12,10 +13,20 @@ Route::prefix('/TransportationModeCategory')->group(function () {
     Route::put('/update/{id}', [TransportationModeCategoryController::class, "update"]);
     Route::delete('/delete/{id}', [TransportationModeCategoryController::class, 'delete']);
 });
+
 Route::prefix('/TransportationModel')->group(function () {
     Route::get('/', [TransportationModelController::class, "index"]);
     Route::post('/create', [TransportationModelController::class, "create"]);
     Route::get('/{id}', [TransportationModelController::class, "show"]);
     Route::put('/update/{id}', [TransportationModelController::class, "update"]);
     Route::delete('/delete/{id}', [TransportationModelController::class, 'delete']);
+});
+
+Route::prefix('/transport-mode')->group(function () {
+    Route::post('/create', [TransportModeController::class, 'createTransportMode'])->middleware('auth:admin');
+    Route::put('/update/{id}', [TransportModeController::class, 'updateTransportationMode'])->middleware('auth:admin');
+    Route::get('/', [TransportModeController::class, 'getAllTransportModes']);
+    Route::get('/{id}', [TransportModeController::class, 'getTransportModeById']);
+    Route::delete('/delete/{id}', [TransportModeController::class, 'deleteTransportMode'])->middleware('auth:admin');
+    Route::get('/search', [TransportModeController::class, 'searchTransportModes']);
 });
