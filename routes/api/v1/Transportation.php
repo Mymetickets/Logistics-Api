@@ -13,6 +13,7 @@ Route::prefix('/TransportationModeCategory')->group(function () {
     Route::put('/update/{id}', [TransportationModeCategoryController::class, "update"]);
     Route::delete('/delete/{id}', [TransportationModeCategoryController::class, 'delete']);
 });
+
 Route::prefix('/TransportationModel')->group(function () {
     Route::get('/', [TransportationModelController::class, "index"]);
     Route::post('/create', [TransportationModelController::class, "create"]);
@@ -21,6 +22,11 @@ Route::prefix('/TransportationModel')->group(function () {
     Route::delete('/delete/{id}', [TransportationModelController::class, 'delete']);
 });
 
-//Route for Admin to update transportation mode
-Route::put('/modes/update/{id}', [TransportModeController::class, 'updateTransportationMode'])
-    ->middleware('auth:admin');
+Route::prefix('/transport-mode')->group(function () {
+    Route::post('/create', [TransportModeController::class, 'createTransportMode'])->middleware('auth:admin');
+    Route::put('/update/{id}', [TransportModeController::class, 'updateTransportationMode'])->middleware('auth:admin');
+    Route::get('/', [TransportModeController::class, 'getAllTransportModes']);
+    Route::get('/{id}', [TransportModeController::class, 'getTransportModeById']);
+    Route::delete('/delete/{id}', [TransportModeController::class, 'deleteTransportMode'])->middleware('auth:admin');
+    Route::get('/search', [TransportModeController::class, 'searchTransportModes']);
+});

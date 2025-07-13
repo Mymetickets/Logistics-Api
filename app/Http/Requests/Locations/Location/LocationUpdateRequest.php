@@ -15,7 +15,7 @@ class LocationUpdateRequest extends FormRequest
     public function rules(): array
     {
        return [
-        'city' => ['sometimes', 'string', 'max:255', 'unique:locations,city,' . $this->route('location')],
+        'city' => ['sometimes', 'string', 'max:255', 'unique:locations,city,' . $this->route('id')],
         'country_id' => ['sometimes', 'integer', 'exists:countries,id'],
         'state_id' => ['sometimes', 'integer', 'exists:states,id'],
         'status' => ['sometimes', 'boolean'],

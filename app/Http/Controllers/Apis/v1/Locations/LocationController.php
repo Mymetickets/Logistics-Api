@@ -10,6 +10,10 @@ use App\Exceptions\FailedProcessException;
 use App\Http\Resources\Locations\LocationResource;
 use App\Http\Requests\Locations\Location\LocationStoreRequest;
 use App\Http\Requests\Locations\Location\LocationUpdateRequest;
+use App\Models\Locations\Location;
+
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
 {
@@ -24,7 +28,6 @@ class LocationController extends Controller
     {
         $data= $this->locationService->getAllLocations();
         return ApiResponse::success('Locations retrieved successfully', LocationResource::collection($data));
-
     }
 
     public function getLocationById($id)
@@ -46,11 +49,21 @@ class LocationController extends Controller
         return ApiResponse::success('Location created successfully', new LocationResource($data));
     }
 
-    public function updateLocation(LocationUpdateRequest $request, $id)
+     public function updateLocation(LocationUpdateRequest $request, $id)
     {
+        $location = Location::findOrFail($id);
+
+        $admin = Auth::guard('admin')->user();
+        if (!$admin || Gate::forUser($admin)->denies('update', $location)) {
+            return ApiResponse::error('Unauthorized. Only administrators can update locations.', 403);
+        }
+
         $data = $request->validated();
-        $data = $this->locationService->updateLocation($id, $data);
-        return ApiResponse::success('Location updated successfully', new LocationResource($data));
+        $updatedLocation = $this->locationService->updateLocation($id, $data);
+        if (!$updatedLocation) {
+            return ApiResponse::error('Location could not be updated after authorization.', 500);
+        }
+        return ApiResponse::success('Location updated successfully.', $updatedLocation);
     }
 
     public function searchLocations(Request $request)

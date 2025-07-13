@@ -25,10 +25,18 @@ class LocationRepository implements IRepository
         return Location::create($data);
     }
 
-    public function update($id, $data)
+   public function update($id, $data)
     {
-        return Location::where("id", $id)->update($data);
+        $location = $this->findById($id);
+
+        if ($location) {
+            $location->update($data);
+            return $location; // Return the updated location object
+        }
+
+        return null;
     }
+
 
     public function delete($id)
     {
